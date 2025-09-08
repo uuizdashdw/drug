@@ -1,14 +1,11 @@
 import type { Config } from 'tailwindcss';
-import typography from '@tailwindcss/typography';
-import forms from '@tailwindcss/forms';
-import lineClamp from '@tailwindcss/line-clamp';
 
 const config: Config = {
     darkMode: 'class',
     content: [
         './src/app/**/*.{ts,tsx}',
         './src/pages/**/*.{ts,tsx}',
-        './src/components/**/*.{ts,tsx}',
+        // './src/components/**/*.{ts,tsx}',
         './src/**/*.{ts,tsx}',
     ],
     theme: {
@@ -25,6 +22,6 @@ const config: Config = {
             },
         },
     },
-    plugins: [typography, forms, lineClamp],
+    // plugins: [typography, forms, lineClamp],
 };
 export default config;
