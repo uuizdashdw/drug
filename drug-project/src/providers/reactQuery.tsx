@@ -1,6 +1,7 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
 
 // 개발 환경에서만 로드
@@ -31,7 +32,7 @@ export default function ReactQueryProvider({ children }: Props) {
     return (
         <QueryClientProvider client={client}>
             {children}
-            {Devtools ? <Devtools /> : null}
+            {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
         </QueryClientProvider>
     );
 }
