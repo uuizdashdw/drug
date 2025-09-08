@@ -2,7 +2,7 @@
 
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
-@plugin "@tailwindcss/line-clamp";
+/* @plugin "@tailwindcss/line-clamp"; */
 
 :root {
     --background: #ffffff;
