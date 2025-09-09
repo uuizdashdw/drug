@@ -7,9 +7,9 @@ interface SearchLayoutProps {
 
 export default function SearchLayout({ children }: SearchLayoutProps) {
     return (
-        <div>
+        <main>
             <SearchBar />
-            <div>{children}</div>
-        </div>
+            <>{children}</>
+        </main>
     );
 }
