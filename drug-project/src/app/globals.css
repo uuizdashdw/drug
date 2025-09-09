@@ -10,14 +10,43 @@
 }
 
 @theme inline {
-    --color-brand-50: #f5f8ff;
-    --color-brand-100: #e6efff;
+    --color-brand-50: #eff6ff;
+    --color-brand-100: #dbeafe;
+    --color-brand-200: #bfdbfe;
+    --color-brand-300: #93c5fd;
+    --color-brand-400: #60a5fa;
     --color-brand-500: #3b82f6;
     --color-brand-600: #2563eb;
+    --color-brand-700: #1d4ed8;
+    --color-brand-800: #1e40af;
     --color-brand-900: #1e3a8a;
 
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
+    --font-sans: var(--font-noto-sans--kr);
+}
+
+@utility container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+
+    /* 반응형 최대 폭 */
+    @media (min-width: 640px) {
+        max-width: 640px;
+    }
+    @media (min-width: 768px) {
+        max-width: 768px;
+    }
+    @media (min-width: 1024px) {
+        max-width: 1024px;
+    }
+    @media (min-width: 1280px) {
+        max-width: 1280px;
+    }
+    @media (min-width: 1536px) {
+        max-width: 1536px;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,6 +59,7 @@
 body {
     /* background: var(--background); */
     background-color: #fff;
+    font-family: 'Noto Sans Kr';
     /* color: var(--foreground); */
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
 }
