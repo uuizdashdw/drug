@@ -20,7 +20,6 @@ export default async function Home({ searchParams }: HomeProps) {
         type: 'json',
     };
     const data = await getMedicineList(params);
-    console.log('## 데이터 :: ', data);
 
     return (
         <div>
