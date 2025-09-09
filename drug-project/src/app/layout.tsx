@@ -4,6 +4,8 @@ import './globals.css';
 
 // 프로바이더 모음
 import Providers from '@/providers';
+import Link from 'next/link';
+import Header from '@/components/common/Header';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -28,6 +30,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                <Header />
                 <Providers>{children}</Providers>
             </body>
         </html>
