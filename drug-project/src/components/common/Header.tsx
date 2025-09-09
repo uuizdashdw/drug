@@ -23,10 +23,14 @@ export default function Header() {
 
             <ul className="flex items-center gap-12">
                 <li>
-                    <Link href={'/auth/signin'}>로그인</Link>
+                    <Link href={'/auth/signin'} className="text-sm">
+                        로그인
+                    </Link>
                 </li>
                 <li>
-                    <Link href={'/auth/signup'}>회원가입</Link>
+                    <Link href={'/auth/signup'} className="text-sm">
+                        회원가입
+                    </Link>
                 </li>
             </ul>
         </header>
