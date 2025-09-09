@@ -41,3 +41,7 @@ export interface DrugListProps {
 export interface DrugItemProps {
     drug: DrugItem;
 }
+
+export interface DrugDetailItemProps {
+    params: Promise<{ id: string }>;
+}
