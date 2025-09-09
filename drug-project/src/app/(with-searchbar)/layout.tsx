@@ -5,7 +5,7 @@ interface SearchLayoutProps {
     children: ReactNode;
 }
 
-export default function SearchLayout({ children }: SearchLayoutProps) {
+export default async function SearchLayout({ children }: SearchLayoutProps) {
     return (
         <main>
             <SearchBar />
