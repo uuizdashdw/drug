@@ -1,7 +1,34 @@
-export default function Home() {
+// API
+import { getMedicineList } from '@/api/drugs';
+
+// Components
+import DrugList from '@/components/common/DrugList';
+import Pagination from '@/components/common/Pagination';
+
+// Types
+import { MedicineListParams } from '@/types/api';
+import { HomeProps } from '@/types/home';
+
+export default async function Home({ searchParams }: HomeProps) {
+    const pageNo = Number(searchParams?.page ?? '1');
+
+    const params: MedicineListParams = {
+        serviceKey: process.env?.DRUG_API_KEY ?? '',
+        numOfRows: 12,
+        pageNo: pageNo,
+        Prduct: '',
+        type: 'json',
+    };
+    const data = await getMedicineList(params);
+
     return (
         <div>
-            <p className="text-brand-500 text-3xl">테일윈드 에러 </p>
+            <DrugList drugs={data.body?.items} />
+            <Pagination
+                currentPage={pageNo}
+                totalCount={data.body?.totalCount ?? 0}
+                pageSize={12}
+            />
         </div>
     );
 }

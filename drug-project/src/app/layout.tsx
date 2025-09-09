@@ -7,6 +7,7 @@ import Providers from '@/providers';
 
 // Components
 import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 
 const notoSansKr = Noto_Sans_KR({
     subsets: ['latin'],
@@ -28,6 +29,7 @@ export default function RootLayout({
             <body className={`${notoSansKr.variable} container antialiased`}>
                 <Header />
                 <Providers>{children}</Providers>
+                <Footer />
             </body>
         </html>
     );
