@@ -33,7 +33,7 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
                         href={`/?page=${page}`}
                         className={`rounded border px-3 py-1 ${
                             page === currentPage
-                                ? 'bg-blue-500 text-white'
+                                ? 'bg-brand-300 text-white'
                                 : 'bg-white text-gray-700'
                         }`}
                     >
