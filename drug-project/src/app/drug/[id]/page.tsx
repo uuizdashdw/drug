@@ -1,5 +1,6 @@
 import { getMedicineList } from '@/api/drugs';
 import BasicInfo from '@/components/drug/detail/BasicInfo';
+import ManufacturerInfo from '@/components/drug/detail/ManufacturerInfo';
 import { DrugDetailItemProps, DrugItem } from '@/types/drug';
 import { tranformDateYYYYMMDD } from '@/utils/transformDate';
 import Image from 'next/image';
@@ -49,23 +50,17 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
 
                 <hr className="my-24 border-t border-gray-300" />
 
-                <section className="mb-6">
-                    <h2 className="mb-2 text-2xl font-bold">제조사 정보</h2>
-                    <p className="mb-1">
-                        <strong>업체명 :</strong> {drug.ENTP_NAME}
-                    </p>
-                    <p className="mb-1">
-                        <strong>사업자등록번호 :</strong> {drug.BIZRNO}
-                    </p>
-                    <p className="mb-1">
-                        <strong>업체 코드 :</strong> {drug.ENTP_SEQ}
-                    </p>
-                </section>
+                <ManufacturerInfo
+                    entpName={drug?.ENTP_NAME}
+                    bizrNo={drug?.BIZRNO}
+                    entpSeq={drug?.ENTP_SEQ}
+                />
 
                 <hr className="my-24 border-t border-gray-300" />
 
                 <section className="mb-6">
                     <h2 className="mb-3 text-2xl font-bold">외형 정보</h2>
+
                     <div className="mb-4 flex flex-col items-center">
                         <Image
                             src={drug.ITEM_IMAGE}
