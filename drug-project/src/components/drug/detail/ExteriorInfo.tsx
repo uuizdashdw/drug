@@ -16,7 +16,7 @@ export default function ExteriorInfo({
 }: ExteriorInfoProps) {
     return (
         <section className="mb-6">
-            <h2 className="mb-3 text-2xl font-bold">외형 정보</h2>
+            <h2 className="mb-8 text-2xl font-bold">외형 정보</h2>
 
             <div className="mb-4 flex flex-col items-center">
                 <Image

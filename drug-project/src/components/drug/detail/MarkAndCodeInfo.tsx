@@ -11,7 +11,7 @@ export default function MarkAndCodeInfo({
 }: MarkAndCodeInfoProps) {
     return (
         <section className="mb-6">
-            <h2 className="mb-3 text-2xl font-bold">마크 / 코드</h2>
+            <h2 className="mb-4 text-2xl font-bold">마크 / 코드 정보</h2>
 
             <p className="mb-1">
                 <strong>앞면 마크 : </strong> {markCodeFront ?? '-'}

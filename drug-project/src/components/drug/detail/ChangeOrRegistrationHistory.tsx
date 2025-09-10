@@ -7,7 +7,7 @@ export default function ChangeOrRegistrationHistory({
 }: ChangeOrRegistrationHistoryProps) {
     return (
         <section className="mb-6">
-            <h2 className="mb-3 text-2xl font-bold">변경 / 등록 이력</h2>
+            <h2 className="mb-4 text-2xl font-bold">변경 / 등록 이력</h2>
 
             <p className="mb-1">
                 <strong>이미지 등록일자 : </strong> {tranformDateYYYYMMDD(imageRegistTs)}
