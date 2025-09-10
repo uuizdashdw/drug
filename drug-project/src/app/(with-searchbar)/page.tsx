@@ -4,25 +4,28 @@ import { getMedicineList } from '@/api/drugs';
 // Components
 import DrugList from '@/components/common/DrugList';
 import Pagination from '@/components/common/Pagination';
+import SearchHistroy from '@/components/search/SearchHistory';
 
 // Types
 import { MedicineListParams } from '@/types/api';
 import { HomeProps } from '@/types/home';
 
 export default async function Home({ searchParams }: HomeProps) {
-    const pageNo = Number(searchParams?.page ?? '1');
+    const param = await searchParams;
+    const pageNo = Number(param?.page ?? '1');
 
-    const params: MedicineListParams = {
-        serviceKey: process.env?.DRUG_API_KEY ?? '',
+    const data = await getMedicineList({
+        serviceKey: process.env.DRUG_API_KEY ?? '',
+        itemName: '',
         numOfRows: 12,
         pageNo: pageNo,
-        Prduct: '',
         type: 'json',
-    };
-    const data = await getMedicineList(params);
+    });
 
     return (
         <div>
+            <SearchHistroy />
+
             <DrugList drugs={data.body?.items} />
             <Pagination
                 currentPage={pageNo}

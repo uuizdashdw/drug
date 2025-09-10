@@ -1,5 +1,3 @@
 export interface HomeProps {
-    searchParams: {
-        page?: string;
-    };
+    searchParams?: Promise<{ page?: string }>;
 }

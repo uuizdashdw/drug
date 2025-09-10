@@ -1,16 +1,20 @@
 'use client';
 
-import { FormEvent, useCallback, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useSearchStore } from '@/store/zustand/searchKeyword';
 
 export default function SearchBar() {
+    const { queries, addQuery } = useSearchStore();
     const [searchValue, setSearchValue] = useState('');
 
     const router = useRouter();
+    const pathName = usePathname();
 
     // 검색어를 핸들링합니다
     const onChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e?.target?.value);
+        addQuery(e?.target?.value);
     };
 
     const handleOnSearch = useCallback(() => {
@@ -20,7 +24,7 @@ export default function SearchBar() {
     }, [searchValue]);
 
     return (
-        <div className="mx-auto mb-14 flex w-8/12 items-center justify-center gap-10">
+        <div className="mx-auto mb-4 flex w-8/12 items-center justify-center gap-10">
             <input
                 type="text"
                 name="search"

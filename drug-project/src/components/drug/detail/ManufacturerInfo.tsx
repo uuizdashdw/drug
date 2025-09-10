@@ -12,10 +12,6 @@ export default function ManufacturerInfo({ entpName, bizrNo, entpSeq }: Manufact
             <p className="mb-1">
                 <strong>사업자등록번호 : </strong> {bizrNo}
             </p>
-            <p className="mb-1">
-                <strong>업체 코드 : </strong>
-                {entpSeq}
-            </p>
         </section>
     );
 }

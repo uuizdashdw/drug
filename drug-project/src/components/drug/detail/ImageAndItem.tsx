@@ -8,7 +8,7 @@ export default function ImageAndItem({ itemName, itemImage }: ImageAndItemProps)
 
             <div className="mb-20 flex justify-center">
                 <Image
-                    src={itemImage}
+                    src={itemImage ?? '/images/no_image.png'}
                     alt={itemName}
                     width={500}
                     height={500}

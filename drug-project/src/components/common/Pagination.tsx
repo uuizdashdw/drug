@@ -4,12 +4,17 @@ import Link from 'next/link';
 
 // Types
 import { PaginationProps } from '@/types/common';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
+import { useSearchStore } from '@/store/zustand/searchKeyword';
 
 export default function Pagination({ currentPage, pageSize, totalCount }: PaginationProps) {
+    const { query } = useSearchStore();
     const totalPages = useMemo(() => {
         return Math.ceil(totalCount / pageSize);
     }, [totalCount, pageSize]);
+
+    const pathName = usePathname();
 
     if (totalPages <= 1) return null;
 
@@ -27,19 +32,24 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
             )}
 
             {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(
-                (page) => (
-                    <Link
-                        key={page}
-                        href={`/?page=${page}`}
-                        className={`rounded border px-3 py-1 ${
-                            page === currentPage
-                                ? 'bg-brand-300 text-white'
-                                : 'bg-white text-gray-700'
-                        }`}
-                    >
-                        {page}
-                    </Link>
-                ),
+                (page) => {
+                    const href = `${pathName}?page=${page}${
+                        query ? `&Prduct=${encodeURIComponent(query)}` : ''
+                    }`;
+                    return (
+                        <Link
+                            key={page}
+                            href={href}
+                            className={`rounded border px-3 py-1 ${
+                                page === currentPage
+                                    ? 'bg-brand-300 text-white'
+                                    : 'bg-white text-gray-700'
+                            }`}
+                        >
+                            {page}
+                        </Link>
+                    );
+                },
             )}
 
             {currentPage < totalPages && (

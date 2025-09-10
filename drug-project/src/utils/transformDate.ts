@@ -1,21 +1,13 @@
 /**
- * @params 예) 20090604
- * @returns 예) 2009.06.04
+ * @params 예) "2021-01-29 00:00:00"
+ * @returns 예) "2021.01.29"
  */
-export const tranformDateYYYYMMDD = (dateStr: string) => {
-    if (!dateStr || dateStr.length !== 8) return dateStr ?? '';
+export const transformDateYYYYMMDD = (dateStr: string) => {
+    if (!dateStr) return '';
 
-    const year = parseInt(dateStr.slice(0, 4), 10);
-    const month = parseInt(dateStr.slice(4, 6), 10) - 1; // JS는 0부터 시작
-    const day = parseInt(dateStr.slice(6, 8), 10);
+    // "2021-01-29 00:00:00" → "2021-01-29"
+    const dateOnly = dateStr.split(' ')[0];
 
-    const d = new Date(year, month, day);
-
-    return d
-        .toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        })
-        .replace(/-/g, '.');
+    // "2021-01-29" → "2021.01.29"
+    return dateOnly.replace(/-/g, '.');
 };

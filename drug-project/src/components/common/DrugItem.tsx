@@ -14,15 +14,16 @@ export default function DrugItem({ drug }: DrugItemProps) {
 
     useEffect(() => {
         setLoading(true);
-    }, [drug?.ITEM_SEQ]);
+    }, [drug?.itemSeq]);
 
     return (
-        <Link href={`/drug/${drug?.ITEM_SEQ}`} className="flex w-80 flex-col items-center">
+        <Link href={`/drug/${drug?.itemSeq}`} className="flex w-80 flex-col items-center">
             <div className="relative h-40 w-72">
                 <Image
-                    key={drug?.ITEM_SEQ}
-                    src={drug?.ITEM_IMAGE}
-                    alt={drug?.ITEM_NAME}
+                    key={drug?.itemSeq}
+                    src={drug?.itemImage ?? '/images/no_image.png'}
+                    alt={drug?.itemName}
+                    sizes=""
                     fill
                     className={`rounded-md object-contain transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
                     onLoad={() => setLoading(false)}
@@ -33,7 +34,7 @@ export default function DrugItem({ drug }: DrugItemProps) {
                 <p
                     className={`mt-2 w-72 truncate text-center text-sm text-stone-950 transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
                 >
-                    {drug?.ITEM_NAME}
+                    {drug?.itemName}
                 </p>
             )}
         </Link>

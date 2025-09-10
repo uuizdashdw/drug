@@ -3,22 +3,23 @@ import { getMedicineList } from '@/api/drugs';
 
 // Components
 import BasicInfo from '@/components/drug/detail/BasicInfo';
+import Caution from '@/components/drug/detail/Caution';
 import ChangeOrRegistrationHistory from '@/components/drug/detail/ChangeOrRegistrationHistory';
+import Classification from '@/components/drug/detail/Classification';
 import ExteriorInfo from '@/components/drug/detail/ExteriorInfo';
 import ImageAndItem from '@/components/drug/detail/ImageAndItem';
 import ManufacturerInfo from '@/components/drug/detail/ManufacturerInfo';
 import MarkAndCodeInfo from '@/components/drug/detail/MarkAndCodeInfo';
+import UseMethod from '@/components/drug/detail/UseMethod';
 
 // Types
 import {
     BaiscInfoProps,
-    ChangeOrRegistrationHistoryProps,
+    CautionProps,
     DrugDetailItemProps,
     DrugItem,
-    ExteriorInfoProps,
     ImageAndItemProps,
     ManufacturerInfoProps,
-    MarkAndCodeInfoProps,
 } from '@/types/drug';
 
 export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
@@ -26,7 +27,7 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
 
     const data = await getMedicineList({
         serviceKey: process.env?.DRUG_API_KEY ?? '',
-        item_seq: id,
+        itemSeq: id,
         numOfRows: 1,
         pageNo: 1,
         type: 'json',
@@ -38,51 +39,28 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
     }
 
     const imageAndItemProps = {
-        itemName: drug?.ITEM_NAME,
-        itemImage: drug?.ITEM_IMAGE,
+        itemName: drug?.itemName,
+        itemImage: drug?.itemImage,
     } as ImageAndItemProps;
 
     const basicInfoProps = {
-        itemName: drug?.ITEM_NAME,
-        className: drug?.CLASS_NAME,
-        classNo: drug?.CLASS_NO,
-        etcOtcName: drug?.ETC_OTC_NAME,
-        itemPermitDate: drug?.ITEM_PERMIT_DATE,
+        itemName: drug?.itemName,
+        efcyQesitm: drug?.efcyQesitm,
+        itemSeq: drug?.itemSeq,
+        openDe: drug?.openDe,
     } as BaiscInfoProps;
 
     const manufacturerInfoProps = {
-        entpName: drug?.ENTP_NAME,
-        bizrNo: drug?.BIZRNO,
-        entpSeq: drug?.ENTP_SEQ,
+        entpName: drug?.entpName,
+        bizrNo: drug?.bizrno,
+        entpSeq: drug?.itemSeq,
     } as ManufacturerInfoProps;
 
-    const exteriorProps = {
-        itemImage: drug?.ITEM_IMAGE,
-        itemName: drug?.ITEM_NAME,
-        drugShape: drug?.DRUG_SHAPE,
-        chart: drug?.CHART,
-        colorClass1: drug?.COLOR_CLASS1,
-        colorClass2: drug?.COLOR_CLASS2,
-        printFront: drug?.PRINT_FRONT,
-        printBack: drug?.PRINT_BACK,
-        longLength: drug?.LENG_LONG,
-        shortLength: drug?.LENG_SHORT,
-        thick: drug?.THICK,
-    } as ExteriorInfoProps;
-
-    const markCodeInfoProps = {
-        markCodeFront: drug?.MARK_CODE_FRONT,
-        markCodeBack: drug?.MARK_CODE_BACK,
-        ediCode: drug?.EDI_CODE,
-        stdCd: drug?.STD_CD,
-        markCodeFrontImage: drug?.MARK_CODE_FRONT_IMG,
-        markCodeBackImage: drug?.MARK_CODE_BACK_IMG,
-    } as MarkAndCodeInfoProps;
-
-    const changeOrRegistrationHistoryProps = {
-        imageRegistTs: drug?.IMG_REGIST_TS,
-        changeDate: drug?.CHANGE_DATE,
-    } as ChangeOrRegistrationHistoryProps;
+    const cautionProps = {
+        intrcQesitm: drug?.intrcQesitm,
+        atpnQesitm: drug?.atpnQesitm,
+        seQesitm: drug?.seQesitm,
+    } as CautionProps;
 
     return (
         <div className="p-4">
@@ -100,18 +78,20 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
 
                 <hr className="my-24 border-t border-gray-300" />
 
-                {/* 외형 정보 */}
-                <ExteriorInfo {...exteriorProps} />
+                {/* 사용 구분 */}
+                <Classification efcyQesitm={drug?.efcyQesitm ?? ''} />
 
                 <hr className="my-24 border-t border-gray-300" />
 
-                {/* 마크 / 코드 정보 */}
-                <MarkAndCodeInfo {...markCodeInfoProps} />
+                {/* 사용법 */}
+                <UseMethod useMethodQesitm={drug?.useMethodQesitm ?? ''} />
 
                 <hr className="my-24 border-t border-gray-300" />
 
-                {/* 변경 / 등록 이력 */}
-                <ChangeOrRegistrationHistory {...changeOrRegistrationHistoryProps} />
+                {/* 주의 사항 */}
+                <Caution {...cautionProps} />
+
+                <p className="mt-24 text-sm">마지막 업데이트 날짜 : {drug?.updateDe}</p>
             </div>
         </div>
     );

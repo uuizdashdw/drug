@@ -1,13 +1,7 @@
 import { BaiscInfoProps } from '@/types/drug';
-import { tranformDateYYYYMMDD } from '@/utils/transformDate';
+import { transformDateYYYYMMDD } from '@/utils/transformDate';
 
-export default function BasicInfo({
-    itemName,
-    className,
-    classNo,
-    etcOtcName,
-    itemPermitDate,
-}: BaiscInfoProps) {
+export default function BasicInfo({ itemName, efcyQesitm, itemSeq, openDe }: BaiscInfoProps) {
     return (
         <section className="mb-6">
             <h2 className="mb-4 text-2xl font-bold">기본 정보</h2>
@@ -17,20 +11,16 @@ export default function BasicInfo({
                 {itemName}
             </p>
             <p className="mb-1">
-                <strong>약효 분류 : </strong>
-                {className}
+                <strong>효과 : </strong>
+                {efcyQesitm}
             </p>
             <p className="mb-1">
-                <strong>약효 고유 번호 : </strong>
-                {classNo}
-            </p>
-            <p className="mb-1">
-                <strong>전문/일반 구분 : </strong>
-                {etcOtcName}
+                <strong>식약처 품목기준코드 : </strong>
+                {itemSeq}
             </p>
             <p className="mb-1">
                 <strong>허가일자 : </strong>
-                {tranformDateYYYYMMDD(itemPermitDate)}
+                {transformDateYYYYMMDD(openDe)}
             </p>
         </section>
     );
