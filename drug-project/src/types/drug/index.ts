@@ -46,6 +46,11 @@ export interface DrugDetailItemProps {
     params: Promise<{ id: string }>;
 }
 
+export interface ImageAndItemProps {
+    itemName: string;
+    itemImage: string;
+}
+
 export interface BaiscInfoProps {
     itemName: string;
     className: string;
