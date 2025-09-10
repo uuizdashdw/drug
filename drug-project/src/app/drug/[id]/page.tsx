@@ -1,19 +1,26 @@
+// API
 import { getMedicineList } from '@/api/drugs';
+
+// Components
 import BasicInfo from '@/components/drug/detail/BasicInfo';
 import ChangeOrRegistrationHistory from '@/components/drug/detail/ChangeOrRegistrationHistory';
 import ExteriorInfo from '@/components/drug/detail/ExteriorInfo';
+import ImageAndItem from '@/components/drug/detail/ImageAndItem';
 import ManufacturerInfo from '@/components/drug/detail/ManufacturerInfo';
 import MarkAndCodeInfo from '@/components/drug/detail/MarkAndCodeInfo';
+
+// Types
 import {
     BaiscInfoProps,
     ChangeOrRegistrationHistoryProps,
     DrugDetailItemProps,
     DrugItem,
     ExteriorInfoProps,
+    ImageAndItemProps,
     ManufacturerInfoProps,
     MarkAndCodeInfoProps,
 } from '@/types/drug';
-import { tranformDateYYYYMMDD } from '@/utils/transformDate';
+
 import Image from 'next/image';
 
 export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
@@ -31,6 +38,11 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
     if (!drug) {
         return <div>데이터를 찾을 수 없습니다.</div>;
     }
+
+    const imageAndItemProps = {
+        itemName: drug?.ITEM_NAME,
+        itemImage: drug?.ITEM_IMAGE,
+    } as ImageAndItemProps;
 
     const basicInfoProps = {
         itemName: drug?.ITEM_NAME,
@@ -76,18 +88,8 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
 
     return (
         <div className="p-4">
-            <h1 className="mb-16 text-center text-3xl font-bold">{drug.ITEM_NAME}</h1>
-
-            <div className="mb-20 flex justify-center">
-                <Image
-                    src={drug?.ITEM_IMAGE}
-                    alt={drug?.ITEM_NAME}
-                    width={500}
-                    height={500}
-                    sizes="80vw" // 뷰포트 너비 기준으로 반응
-                    className="h-auto w-2xl"
-                />
-            </div>
+            {/* 약물 이미지 및 이름 정보 */}
+            <ImageAndItem {...imageAndItemProps} />
 
             <div className="mx-auto w-2xl">
                 {/* 기본 정보 */}
