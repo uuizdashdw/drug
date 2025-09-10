@@ -14,12 +14,12 @@ export default function SearchBar() {
     // 검색어를 핸들링합니다
     const onChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e?.target?.value);
-        addQuery(e?.target?.value);
     };
 
     const handleOnSearch = useCallback(() => {
         const q = searchValue.trim();
         if (!q) return; // 빈 검색어 방지
+        addQuery(q);
         router.push(`/search?q=${encodeURIComponent(q)}`);
     }, [searchValue]);
 
