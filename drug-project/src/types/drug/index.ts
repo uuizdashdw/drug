@@ -59,3 +59,26 @@ export interface ManufacturerInfoProps {
     bizrNo: string;
     entpSeq: string;
 }
+
+export interface ExteriorInfoProps {
+    itemImage: string;
+    itemName: string;
+    chart: string;
+    drugShape: string;
+    colorClass1: string;
+    colorClass2: string;
+    printFront: string;
+    printBack: string;
+    longLength: string;
+    shortLength: string;
+    thick: string;
+}
+
+export interface MarkAndCodeInfoProps {
+    markCodeFront: string | null;
+    markCodeBack: string | null;
+    ediCode: string | null;
+    stdCd: string | null;
+    markCodeFrontImage: string | null;
+    markCodeBackImage: string | null;
+}
