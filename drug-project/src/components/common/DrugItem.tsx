@@ -24,7 +24,7 @@ export default function DrugItem({ drug }: DrugItemProps) {
                     src={drug?.ITEM_IMAGE}
                     alt={drug?.ITEM_NAME}
                     fill
-                    className={`object-contain transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
+                    className={`rounded-md object-contain transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
                     onLoad={() => setLoading(false)}
                     // unoptimized
                 />
