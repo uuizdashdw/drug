@@ -53,3 +53,9 @@ export interface BaiscInfoProps {
     etcOtcName: string;
     itemPermitDate: string;
 }
+
+export interface ManufacturerInfoProps {
+    entpName: string;
+    bizrNo: string;
+    entpSeq: string;
+}
