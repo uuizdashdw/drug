@@ -82,3 +82,8 @@ export interface MarkAndCodeInfoProps {
     markCodeFrontImage: string | null;
     markCodeBackImage: string | null;
 }
+
+export interface ChangeOrRegistrationHistoryProps {
+    imageRegistTs: string;
+    changeDate: string;
+}
