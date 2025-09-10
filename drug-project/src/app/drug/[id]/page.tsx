@@ -1,7 +1,16 @@
 import { getMedicineList } from '@/api/drugs';
 import BasicInfo from '@/components/drug/detail/BasicInfo';
+import ExteriorInfo from '@/components/drug/detail/ExteriorInfo';
 import ManufacturerInfo from '@/components/drug/detail/ManufacturerInfo';
-import { DrugDetailItemProps, DrugItem } from '@/types/drug';
+import MarkAndCodeInfo from '@/components/drug/detail/MarkAndCodeInfo';
+import {
+    BaiscInfoProps,
+    DrugDetailItemProps,
+    DrugItem,
+    ExteriorInfoProps,
+    ManufacturerInfoProps,
+    MarkAndCodeInfoProps,
+} from '@/types/drug';
 import { tranformDateYYYYMMDD } from '@/utils/transformDate';
 import Image from 'next/image';
 
@@ -21,7 +30,42 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
         return <div>데이터를 찾을 수 없습니다.</div>;
     }
 
-    console.log('## 드러그 :: ', drug);
+    const basicInfoProps = {
+        itemName: drug?.ITEM_NAME,
+        className: drug?.CLASS_NAME,
+        classNo: drug?.CLASS_NO,
+        etcOtcName: drug?.ETC_OTC_NAME,
+        itemPermitDate: drug?.ITEM_PERMIT_DATE,
+    } as BaiscInfoProps;
+
+    const manufacturerInfoProps = {
+        entpName: drug?.ENTP_NAME,
+        bizrNo: drug?.BIZRNO,
+        entpSeq: drug?.ENTP_SEQ,
+    } as ManufacturerInfoProps;
+
+    const exteriorProps = {
+        itemImage: drug?.ITEM_IMAGE,
+        itemName: drug?.ITEM_NAME,
+        drugShape: drug?.DRUG_SHAPE,
+        chart: drug?.CHART,
+        colorClass1: drug?.COLOR_CLASS1,
+        colorClass2: drug?.COLOR_CLASS2,
+        printFront: drug?.PRINT_FRONT,
+        printBack: drug?.PRINT_BACK,
+        longLength: drug?.LENG_LONG,
+        shortLength: drug?.LENG_SHORT,
+        thick: drug?.THICK,
+    } as ExteriorInfoProps;
+
+    const markCodeInfoProps = {
+        markCodeFront: drug?.MARK_CODE_FRONT,
+        markCodeBack: drug?.MARK_CODE_BACK,
+        ediCode: drug?.EDI_CODE,
+        stdCd: drug?.STD_CD,
+        markCodeFrontImage: drug?.MARK_CODE_FRONT_IMG,
+        markCodeBackImage: drug?.MARK_CODE_BACK_IMG,
+    } as MarkAndCodeInfoProps;
 
     return (
         <div className="p-4">
@@ -40,61 +84,23 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
 
             <div className="mx-auto w-2xl">
                 {/* 기본 정보 */}
-                <BasicInfo
-                    itemName={drug?.ITEM_NAME}
-                    className={drug?.CLASS_NAME}
-                    classNo={drug?.CLASS_NO}
-                    etcOtcName={drug?.ETC_OTC_NAME}
-                    itemPermitDate={drug?.ITEM_PERMIT_DATE}
-                />
+                <BasicInfo {...basicInfoProps} />
 
                 <hr className="my-24 border-t border-gray-300" />
 
-                <ManufacturerInfo
-                    entpName={drug?.ENTP_NAME}
-                    bizrNo={drug?.BIZRNO}
-                    entpSeq={drug?.ENTP_SEQ}
-                />
+                {/* 제조사 정보 */}
+                <ManufacturerInfo {...manufacturerInfoProps} />
 
                 <hr className="my-24 border-t border-gray-300" />
 
-                <section className="mb-6">
-                    <h2 className="mb-3 text-2xl font-bold">외형 정보</h2>
-
-                    <div className="mb-4 flex flex-col items-center">
-                        <Image
-                            src={drug.ITEM_IMAGE}
-                            alt={drug.ITEM_NAME}
-                            width={100}
-                            height={100}
-                            className="h-auto w-48 rounded shadow"
-                        />
-
-                        <p className="mt-2 text-sm text-gray-500">{drug.CHART}</p>
-                    </div>
-
-                    <p className="mb-1">
-                        <strong>모양 :</strong> {drug.DRUG_SHAPE}
-                    </p>
-                    <p className="mb-1">
-                        <strong>색상 :</strong> {drug.COLOR_CLASS1} {drug.COLOR_CLASS2 ?? ''}
-                    </p>
-                    <p className="mb-1">
-                        <strong>각인 :</strong> 앞면 {drug.PRINT_FRONT} / 뒷면 {drug.PRINT_BACK}
-                    </p>
-                    <p className="mb-1">
-                        <strong>분할선 :</strong> 앞면 {drug.PRINT_FRONT ?? '-'} / 뒷면{' '}
-                        {drug.PRINT_BACK ?? '-'}
-                    </p>
-                    <p className="mb-1">
-                        <strong>크기 :</strong> 길이 {drug.LENG_LONG}mm × {drug.LENG_SHORT}mm, 두께{' '}
-                        {drug.THICK}mm
-                    </p>
-                </section>
+                {/* 외형 정보 */}
+                <ExteriorInfo {...exteriorProps} />
 
                 <hr className="my-24 border-t border-gray-300" />
 
-                <section className="mb-6">
+                {/* 마크 / 코드 정보 */}
+                <MarkAndCodeInfo {...markCodeInfoProps} />
+                {/* <section className="mb-6">
                     <h2 className="mb-3 text-2xl font-bold">마크 / 코드</h2>
 
                     <p className="mb-1">
@@ -128,7 +134,7 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
                             />
                         )}
                     </div>
-                </section>
+                </section> */}
 
                 <hr className="my-24 border-t border-gray-300" />
 
