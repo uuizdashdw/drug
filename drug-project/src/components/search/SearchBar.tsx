@@ -34,7 +34,7 @@ export default function SearchBar() {
                 className="border-brand-300 w-6/12 rounded-sm border-2 outline-0 focus:ring-0 focus:outline-none"
             />
             <button
-                className="bg-brand-300 rounded-sm px-5 py-2.5 font-bold text-white"
+                className="bg-brand-300 cursor-pointer rounded-sm px-5 py-2.5 font-bold text-white"
                 onClick={handleOnSearch}
             >
                 검색
