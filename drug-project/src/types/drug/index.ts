@@ -1,37 +1,20 @@
 export interface DrugItem {
-    ITEM_SEQ: string;
-    ITEM_NAME: string;
-    ENTP_SEQ: string;
-    ENTP_NAME: string;
-    CHART: string;
-    ITEM_IMAGE: string;
-    PRINT_FRONT: string;
-    PRINT_BACK: string;
-    DRUG_SHAPE: string;
-    COLOR_CLASS1: string;
-    COLOR_CLASS2: string;
-    LINE_FRONT: string;
-    LINE_BACK: string;
-    LENG_LONG: string;
-    LENG_SHORT: string;
-    THICK: string;
-    IMG_REGIST_TS: string;
-    CLASS_NO: string;
-    CLASS_NAME: string;
-    ETC_OTC_NAME: string;
-    ITEM_PERMIT_DATE: string;
-    FORM_CODE_NAME: string;
-    MARK_CODE_FRONT_ANAL: string;
-    MARK_CODE_BACK_ANAL: string;
-    MARK_CODE_FRONT_IMG: string;
-    MARK_CODE_BACK_IMG: string;
-    ITEM_ENG_NAME: string;
-    CHANGE_DATE: string;
-    MARK_CODE_FRONT: string;
-    MARK_CODE_BACK: string;
-    EDI_CODE: string;
-    BIZRNO: string;
-    STD_CD: string;
+    itemSeq: string; // 품목기준코드
+    itemName: string; // 품목명
+    entpName: string; // 업체명
+    bizrno: string; // 사업자등록번호
+
+    efcyQesitm: string | null; // 효능효과
+    useMethodQesitm: string | null; // 사용법
+    atpnWarnQesitm: string | null; // 주의사항 경고
+    atpnQesitm: string | null; // 주의사항
+    intrcQesitm: string | null; // 상호작용
+    seQesitm: string | null; // 부작용
+    depositMethodQesitm: string | null; // 보관법
+
+    itemImage: string | null; // 의약품 이미지
+    openDe: string | null; // 공개일자
+    updateDe: string | null; // 수정일자
 }
 
 export interface DrugListProps {
@@ -44,4 +27,36 @@ export interface DrugItemProps {
 
 export interface DrugDetailItemProps {
     params: Promise<{ id: string }>;
+}
+
+export interface ImageAndItemProps {
+    itemName: string;
+    itemImage: string;
+}
+
+export interface BaiscInfoProps {
+    itemName: string;
+    efcyQesitm: string;
+    itemSeq: string;
+    openDe: string;
+}
+
+export interface ManufacturerInfoProps {
+    entpName: string;
+    bizrNo: string;
+    entpSeq: string;
+}
+
+export interface CautionProps {
+    atpnQesitm: string;
+    intrcQesitm: string;
+    seQesitm: string;
+}
+
+export interface UseMethodProps {
+    useMethodQesitm: string;
+}
+
+export interface ClassificationProps {
+    efcyQesitm: string;
 }

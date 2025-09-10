@@ -1,25 +1,42 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
+// Types
 import { DrugItemProps } from '@/types/drug';
+
+// Components
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
 
 export default function DrugItem({ drug }: DrugItemProps) {
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        console.log('## 약물 상세 :: ', drug);
-    }, [drug]);
+        setLoading(true);
+    }, [drug?.itemSeq]);
+
     return (
-        <Link href={`/drug/${drug?.ITEM_SEQ}`} className="flex flex-col items-center">
-            <Image
-                src={drug?.ITEM_IMAGE}
-                alt={drug?.ITEM_IMAGE}
-                width={300}
-                height={500}
-                className="mb-3"
-                loading="lazy"
-            />
-            <p className="text-sm text-stone-950">{drug?.ITEM_NAME}</p>
+        <Link href={`/drug/${drug?.itemSeq}`} className="flex w-80 flex-col items-center">
+            <div className="relative h-40 w-72">
+                <Image
+                    key={drug?.itemSeq}
+                    src={drug?.itemImage ?? '/images/no_image.png'}
+                    alt={drug?.itemName}
+                    sizes=""
+                    fill
+                    className={`rounded-md object-contain transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
+                    onLoad={() => setLoading(false)}
+                    // unoptimized
+                />
+            </div>
+            {!loading && (
+                <p
+                    className={`mt-2 w-72 truncate text-center text-sm text-stone-950 transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
+                >
+                    {drug?.itemName}
+                </p>
+            )}
         </Link>
     );
 }

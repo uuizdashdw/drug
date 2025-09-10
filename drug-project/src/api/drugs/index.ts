@@ -1,31 +1,39 @@
+import { cache } from 'react';
 import { MedicineListParams } from '@/types/api';
 
-// 품목명, 업체명, 의약품의 모양, 색 등의 의약품 낱알 정보를 목록으로 제공
-export const getMedicineList = async (params: MedicineListParams) => {
+// 의약품 설명서 API (DrbEasyDrugInfoService)
+export const getMedicineList = cache(async (params: MedicineListParams) => {
     const query = new URLSearchParams({
         serviceKey: process.env.DRUG_API_KEY ?? '',
         pageNo: String(params?.pageNo ?? 1),
-        numOfRows: String(params?.numOfRows ?? 10),
-        type: params.type ?? 'json', // 기본 json으로
+        numOfRows: String(params?.numOfRows ?? 12),
+        type: params?.type ?? 'json', // 기본 json
+        itemName: params?.itemName ?? '',
     });
 
-    if (params?.Prduct) query.set('Prduct', params?.Prduct);
-    if (params?.Entrps) query.set('Entrps', params?.Entrps);
-    if (params?.Rtrvl_resn) query.set('Rtrvl_resn', params?.Rtrvl_resn);
-    if (params?.item_seq) query.set('item_seq', params?.item_seq);
-    if (params?.bizrno) query.set('bizrno', params?.bizrno);
+    if (params?.entpName) query.set('entpName', params.entpName); // 업체명
+    if (params?.itemName) query.set('itemName', params.itemName); // 품목명
+    if (params?.itemSeq) query.set('itemSeq', params.itemSeq); // 품목기준코드
+    if (params?.efcyQesitm) query.set('efcyQesitm', params.efcyQesitm); // 효능효과
+    if (params?.useMethodQesitm) query.set('useMethodQesitm', params.useMethodQesitm);
+    if (params?.atpnWarnQesitm) query.set('atpnWarnQesitm', params.atpnWarnQesitm);
+    if (params?.atpnQesitm) query.set('atpnQesitm', params.atpnQesitm);
+    if (params?.intrcQesitm) query.set('intrcQesitm', params.intrcQesitm);
+    if (params?.seQesitm) query.set('seQesitm', params.seQesitm);
+    if (params?.depositMethodQesitm) query.set('depositMethodQesitm', params.depositMethodQesitm);
+    if (params?.openDe) query.set('openDe', params.openDe);
+    if (params?.updateDe) query.set('updateDe', params.updateDe);
 
-    const url = `https://apis.data.go.kr/1471000/MdcinGrnIdntfcInfoService02/getMdcinGrnIdntfcInfoList02?${query.toString()}`;
+    const url = `https://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?${query.toString()}`;
     const res = await fetch(url, { cache: 'no-store' });
 
     if (!res.ok) {
         throw new Error(`API Error: ${res.status}`);
     }
 
-    // type이 xml이면 text()로 받아야 함
     if (params?.type === 'xml') {
         return await res.text();
     }
 
     return await res.json();
-};
+});

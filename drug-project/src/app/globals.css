@@ -27,8 +27,6 @@
 @utility container {
     width: 100%;
     margin: 0 auto;
-    padding-left: 1rem; /* px-4 */
-    padding-right: 1rem; /* px-4 */
 
     /* 반응형 최대 폭 */
     @media (min-width: 640px) {
