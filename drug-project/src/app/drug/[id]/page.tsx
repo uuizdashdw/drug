@@ -21,8 +21,6 @@ import {
     MarkAndCodeInfoProps,
 } from '@/types/drug';
 
-import Image from 'next/image';
-
 export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
     const { id } = await params;
 
