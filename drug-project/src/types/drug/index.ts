@@ -45,3 +45,11 @@ export interface DrugItemProps {
 export interface DrugDetailItemProps {
     params: Promise<{ id: string }>;
 }
+
+export interface BaiscInfoProps {
+    itemName: string;
+    className: string;
+    classNo: string;
+    etcOtcName: string;
+    itemPermitDate: string;
+}
