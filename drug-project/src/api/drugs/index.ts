@@ -1,7 +1,8 @@
+import { cache } from 'react';
 import { MedicineListParams } from '@/types/api';
 
 // 품목명, 업체명, 의약품의 모양, 색 등의 의약품 낱알 정보를 목록으로 제공
-export const getMedicineList = async (params: MedicineListParams) => {
+export const getMedicineList = cache(async (params: MedicineListParams) => {
     const query = new URLSearchParams({
         serviceKey: process.env.DRUG_API_KEY ?? '',
         pageNo: String(params?.pageNo ?? 1),
@@ -28,4 +29,4 @@ export const getMedicineList = async (params: MedicineListParams) => {
     }
 
     return await res.json();
-};
+});
