@@ -23,9 +23,16 @@ export default function SearchBar({ type }: SearchBarProps) {
 
     const handleOnSearch = useCallback(() => {
         const q = searchValue.trim();
+
         if (!q) return; // 빈 검색어 방지
+
         addQuery(q);
-        router.push(`/search?q=${encodeURIComponent(q)}`);
+
+        if (pathName === '/search' || pathName === '/') {
+            router.push(`/search?q=${encodeURIComponent(q)}`);
+        } else {
+            router.push(`/search/pharmacy?q=${encodeURIComponent(q)}&pageNo=1`);
+        }
     }, [searchValue]);
 
     return (

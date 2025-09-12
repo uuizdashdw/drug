@@ -34,7 +34,7 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
             {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(
                 (page, idx) => {
                     const href = `${pathName}?page=${page}${
-                        queries?.length > 0 ? `&Prduct=${encodeURIComponent(queries[idx])}` : ''
+                        pathName === '/search' ? `&Prduct=${encodeURIComponent(queries[idx])}` : ''
                     }`;
                     return (
                         <Link
