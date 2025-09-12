@@ -26,10 +26,13 @@ export interface PharmacyListParams {
     serviceKey: string;
     pageNo?: number;
     numOfRows?: number;
-    Q0?: string; // 시도명
-    Q1?: string; // 시군구명
-    QT?: string; // 검색 시간대
-    QN?: string; // 약국명
-    ORD?: string; // 정렬 기준
-    type?: 'xml' | 'json';
+
+    sidoCd?: string; // 시도 코드 (예: 110000)
+    sgguCd?: string; // 시군구 코드 (예: 110019)
+    emdongNm?: string; // 읍면동명 (예: 신내동)
+    yadmNm?: string; // 약국명 (예: 온누리건강)
+
+    xPos?: string; // 중심좌표 X (경도)
+    yPos?: string; // 중심좌표 Y (위도)
+    radius?: string; // 반경 (m 단위)
 }

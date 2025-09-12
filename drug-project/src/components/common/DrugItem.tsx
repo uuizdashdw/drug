@@ -8,16 +8,23 @@ import { DrugItemProps } from '@/types/drug';
 // Components
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchStore } from '@/store/zustand/searchKeyword';
 
 export default function DrugItem({ drug }: DrugItemProps) {
     const [loading, setLoading] = useState(true);
+
+    const { addItem } = useSearchStore();
 
     useEffect(() => {
         setLoading(true);
     }, [drug?.itemSeq]);
 
     return (
-        <Link href={`/drug/${drug?.itemSeq}`} className="flex w-80 flex-col items-center">
+        <Link
+            href={`/drug/${drug?.itemSeq}`}
+            className="flex w-80 flex-col items-center"
+            onClick={() => addItem({ ...drug, type: 'drug' })}
+        >
             <div className="relative h-40 w-72">
                 <Image
                     key={drug?.itemSeq}
