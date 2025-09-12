@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 import { useSearchStore } from '@/store/zustand/searchKeyword';
 
 export default function Pagination({ currentPage, pageSize, totalCount }: PaginationProps) {
-    const { query } = useSearchStore();
+    const { queries } = useSearchStore();
     const totalPages = useMemo(() => {
         return Math.ceil(totalCount / pageSize);
     }, [totalCount, pageSize]);
@@ -32,9 +32,9 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
             )}
 
             {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(
-                (page) => {
+                (page, idx) => {
                     const href = `${pathName}?page=${page}${
-                        query ? `&Prduct=${encodeURIComponent(query)}` : ''
+                        queries?.length > 0 ? `&Prduct=${encodeURIComponent(queries[idx])}` : ''
                     }`;
                     return (
                         <Link
