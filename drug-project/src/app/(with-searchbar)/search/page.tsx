@@ -3,8 +3,8 @@ import DrugList from '@/components/common/DrugList';
 import Pagination from '@/components/common/Pagination';
 import NoContent from '@/components/search/NoContent';
 import SearchHistroy from '@/components/search/SearchHistory';
-import { useSearchStore } from '@/store/zustand/searchKeyword';
-import { MedicineListParams } from '@/types/api';
+import SearchResultGuide from '@/components/search/SearchResultGuide';
+
 import { SearchPageProps } from '@/types/search';
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
@@ -13,7 +13,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     const pageNo = Number(param?.page ?? '1');
 
     const data = await getMedicineList({
-        serviceKey: process.env.DRUG_API_KEY ?? '',
+        serviceKey: process.env.SERVICE_API_KEY ?? '',
         itemName: itemName,
         numOfRows: 12,
         pageNo: pageNo,
@@ -27,7 +27,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <SearchHistroy />
 
             {Array.isArray(data.body?.items) && data.body?.items?.length > 0 && (
-                <DrugList drugs={data.body?.items} />
+                <>
+                    <SearchResultGuide itemName={itemName} length={data.body?.items?.length} />
+                    <DrugList drugs={data.body?.items} />
+                </>
             )}
 
             {(!Array.isArray(data.body?.items) || data?.body?.items?.length === 0) && (
