@@ -19,7 +19,6 @@ export default async function PharmacySearchPage({ searchParams }: SearchPharmac
         numOfRows: 12,
     });
 
-    // console.log(' 약국 검색 결과 :: ', data?.response?.body);
     return (
         <div className="container">
             <SearchHistroy />
