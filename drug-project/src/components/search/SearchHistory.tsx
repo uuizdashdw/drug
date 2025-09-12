@@ -8,7 +8,7 @@ import { useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function SearchHistroy() {
-    const { queries, removeQuery } = useSearchStore();
+    const { queries, removeQuery, clearQueries } = useSearchStore();
     const pathName = usePathname();
 
     const getHref = useCallback(
@@ -22,8 +22,10 @@ export default function SearchHistroy() {
         [pathName],
     );
 
+    if (queries?.length === 0) return null;
+
     return (
-        <div className="mx-auto mb-6 w-6/12">
+        <div className="mx-auto mb-6 flex w-5/12 items-center justify-between">
             <ul className="flex flex-wrap items-center justify-center gap-4 px-4">
                 {queries?.map((keyword, index) => (
                     <li key={index} className="flex items-center gap-1">
@@ -34,6 +36,7 @@ export default function SearchHistroy() {
                         </div>
 
                         <button
+                            type="button"
                             className="flex h-6 w-6 cursor-pointer items-start justify-center"
                             onClick={() => removeQuery(keyword)}
                         >
@@ -42,6 +45,10 @@ export default function SearchHistroy() {
                     </li>
                 ))}
             </ul>
+
+            <button type="button" className="cursor-pointer" onClick={clearQueries}>
+                <p className="text-sm text-gray-400">모두 삭제</p>
+            </button>
         </div>
     );
 }
