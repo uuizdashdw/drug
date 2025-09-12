@@ -26,7 +26,7 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
     const { id } = await params;
 
     const data = await getMedicineList({
-        serviceKey: process.env?.DRUG_API_KEY ?? '',
+        serviceKey: process.env?.SERVICE_API_KEY ?? '',
         itemSeq: id,
         numOfRows: 1,
         pageNo: 1,
