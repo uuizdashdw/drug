@@ -11,11 +11,11 @@ import { MedicineListParams } from '@/types/api';
 import { HomeProps } from '@/types/home';
 
 export default async function Home({ searchParams }: HomeProps) {
-    const param = await searchParams;
+    const param = searchParams;
     const pageNo = Number(param?.page ?? '1');
 
     const data = await getMedicineList({
-        serviceKey: process.env.DRUG_API_KEY ?? '',
+        serviceKey: process.env.SERVICE_API_KEY ?? '',
         itemName: '',
         numOfRows: 12,
         pageNo: pageNo,

@@ -8,7 +8,7 @@ interface SearchLayoutProps {
 export default async function SearchLayout({ children }: SearchLayoutProps) {
     return (
         <main>
-            <SearchBar />
+            <SearchBar type="drug" />
             <>{children}</>
         </main>
     );
