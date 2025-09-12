@@ -18,7 +18,7 @@ export const getPharmacyList = cache(async (params: PharmacyListParams) => {
     if (params?.radius) query.set('radius', params.radius);
 
     const url = `https://apis.data.go.kr/B551182/pharmacyInfoService/getParmacyBasisList?${query.toString()}`;
-    const res = await fetch(url, { cache: 'no-store' });
+    const res = await fetch(url, { cache: 'force-cache' });
 
     if (!res.ok) {
         throw new Error(`API Error: ${res.status}`);
