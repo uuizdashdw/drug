@@ -20,3 +20,16 @@ export interface MedicineListParams {
     openDe?: string; // 공개일자
     updateDe?: string; // 수정일자
 }
+
+// 약국 정보
+export interface PharmacyListParams {
+    serviceKey: string;
+    pageNo?: number;
+    numOfRows?: number;
+    Q0?: string; // 시도명
+    Q1?: string; // 시군구명
+    QT?: string; // 검색 시간대
+    QN?: string; // 약국명
+    ORD?: string; // 정렬 기준
+    type?: 'xml' | 'json';
+}
