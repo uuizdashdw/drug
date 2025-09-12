@@ -31,7 +31,7 @@ export interface DrugDetailItemProps {
 
 export interface ImageAndItemProps {
     itemName: string;
-    itemImage: string;
+    itemImage: string | null;
 }
 
 export interface BaiscInfoProps {
