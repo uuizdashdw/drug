@@ -10,8 +10,8 @@ export default function PharmacyItem({ item }: PharmacyItemProps) {
 
     useEffect(() => {
         console.log('## ddddd ', item);
-        setLoading(true);
-    }, [item?.dutyName]);
+        setLoading(false);
+    }, [item?.yadmNm]);
     return (
         <Link
             href={`/pharmacy/${encodeURIComponent(JSON.stringify(item))}`}
@@ -19,9 +19,9 @@ export default function PharmacyItem({ item }: PharmacyItemProps) {
         >
             <div className="relative h-40 w-72">
                 <Image
-                    key={item?.dutyName}
+                    key={item?.yadmNm}
                     src={'/images/no_image.png'}
-                    alt={item?.dutyName}
+                    alt={item?.yadmNm}
                     sizes=""
                     fill
                     className={`rounded-md object-contain transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
@@ -33,7 +33,7 @@ export default function PharmacyItem({ item }: PharmacyItemProps) {
                 <p
                     className={`mt-2 w-72 truncate text-center text-sm text-stone-950 transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}
                 >
-                    {item?.dutyName}
+                    {item?.yadmNm}
                 </p>
             )}
         </Link>
