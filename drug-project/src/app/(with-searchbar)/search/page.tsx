@@ -28,7 +28,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
             {Array.isArray(data.body?.items) && data.body?.items?.length > 0 && (
                 <>
-                    <SearchResultGuide itemName={itemName} length={data.body?.items?.length} />
+                    {itemName && (
+                        <SearchResultGuide itemName={itemName} length={data.body?.items?.length} />
+                    )}
                     <DrugList drugs={data.body?.items} />
                 </>
             )}
