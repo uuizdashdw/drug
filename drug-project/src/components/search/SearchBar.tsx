@@ -1,15 +1,20 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSearchStore } from '@/store/zustand/searchKeyword';
+import { SearchBarProps } from '@/types/common';
 
-export default function SearchBar() {
+export default function SearchBar({ type }: SearchBarProps) {
     const { queries, addQuery } = useSearchStore();
     const [searchValue, setSearchValue] = useState('');
 
     const router = useRouter();
     const pathName = usePathname();
+
+    const typeName = useMemo(() => {
+        return type === 'pharmacy' ? '약국' : '의약품';
+    }, [type]);
 
     // 검색어를 핸들링합니다
     const onChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +33,7 @@ export default function SearchBar() {
             <input
                 type="text"
                 name="search"
-                placeholder="찾고자 하는 의약품을 검색해주세요!"
+                placeholder={`찾고자 하는 ${typeName}을 검색해주세요!`}
                 value={searchValue}
                 onChange={onChangeSearchValue}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
