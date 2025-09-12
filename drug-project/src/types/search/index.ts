@@ -5,3 +5,7 @@ export interface SearchPageProps {
 export interface NoContentProps {
     keyword: string;
 }
+
+export interface SearchPharmacyPageProps {
+    searchParams: Promise<{ q: string; pageNo?: string }>;
+}
