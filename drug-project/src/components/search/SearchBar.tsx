@@ -35,6 +35,17 @@ export default function SearchBar({ type }: SearchBarProps) {
         }
     }, [searchValue]);
 
+    useEffect(() => {
+        if (!searchValue?.trim()) return;
+        const q = searchValue?.trim();
+
+        if (pathName === 'search' || pathName === '/') {
+            router.prefetch(`/search?q=${encodeURIComponent(q)}`);
+        } else {
+            router.prefetch(`/search/pharmacy?q=${encodeURIComponent(q)}&pageNo=1`);
+        }
+    }, [searchValue, pathName]);
+
     return (
         <div className="mx-auto mb-4 flex w-8/12 items-center justify-center gap-10">
             <input
