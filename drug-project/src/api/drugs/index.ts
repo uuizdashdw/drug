@@ -4,7 +4,7 @@ import { MedicineListParams } from '@/types/api';
 // 의약품 설명서 API (DrbEasyDrugInfoService)
 export const getMedicineList = cache(async (params: MedicineListParams) => {
     const query = new URLSearchParams({
-        serviceKey: process.env.DRUG_API_KEY ?? '',
+        serviceKey: process.env.SERVICE_API_KEY ?? '',
         pageNo: String(params?.pageNo ?? 1),
         numOfRows: String(params?.numOfRows ?? 12),
         type: params?.type ?? 'json', // 기본 json
