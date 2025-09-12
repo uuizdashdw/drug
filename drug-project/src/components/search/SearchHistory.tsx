@@ -25,8 +25,8 @@ export default function SearchHistroy() {
     if (queries?.length === 0) return null;
 
     return (
-        <div className="mx-auto mb-6 flex w-5/12 items-center justify-between">
-            <ul className="flex flex-wrap items-center justify-center gap-4 px-4">
+        <div className="mx-auto mb-6 flex w-5/12 items-start justify-between">
+            <ul className="flex flex-wrap items-center justify-center gap-4">
                 {queries?.map((keyword, index) => (
                     <li key={index} className="flex items-center gap-1">
                         <div className="border-brand-100 rounded-md border px-3.5 py-1">
@@ -46,8 +46,12 @@ export default function SearchHistroy() {
                 ))}
             </ul>
 
-            <button type="button" className="cursor-pointer" onClick={clearQueries}>
-                <p className="text-sm text-gray-400">모두 삭제</p>
+            <button
+                type="button"
+                className="min-w-12 cursor-pointer px-3.5 py-1 whitespace-nowrap"
+                onClick={clearQueries}
+            >
+                <span className="text-sm text-gray-400">모두 삭제</span>
             </button>
         </div>
     );
