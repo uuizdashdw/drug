@@ -17,7 +17,7 @@ export default function Header() {
                     <Link href={'/search'}>의약품 찾기</Link>
                 </li>
                 <li>
-                    <Link href={'/drug/1'}>drug</Link>
+                    <Link href={'/pharmacy'}>약국 찾기</Link>
                 </li>
             </ul>
 
