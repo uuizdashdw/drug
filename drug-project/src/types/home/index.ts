@@ -1,3 +1,3 @@
 export interface HomeProps {
-    searchParams?: Promise<{ page?: string }>;
+    searchParams?: Record<string, string | string[] | undefined>;
 }
