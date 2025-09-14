@@ -11,7 +11,7 @@ export default async function PharmacyPage({ searchParams }: PharmacyPageProps) 
     const data = await getPharmacyList({
         serviceKey: process.env.SERVICE_API_KEY ?? '',
         pageNo: pageNo,
-        numOfRows: 12,
+        numOfRows: 20,
     });
 
     return (
