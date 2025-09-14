@@ -1,15 +1,13 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 
-// 개발 환경에서만 로드
-let Devtools: React.ComponentType | null = null;
-if (process.env.NODE_ENV === 'development') {
-    const { ReactQueryDevtools } = require('@tanstack/react-query-devtools');
-    Devtools = (props) => <ReactQueryDevtools initialIsOpen={false} {...props} />;
-}
+const ReactQueryDevtools = dynamic(
+    () => import('@tanstack/react-query-devtools').then((mod) => mod.ReactQueryDevtools),
+    { ssr: false }, // 서버에서 렌더링 안 함
+);
 
 type Props = { children: React.ReactNode };
 
