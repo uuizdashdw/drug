@@ -9,6 +9,7 @@ import Providers from '@/providers';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import RecentViewed from '@/components/common/RecentViewed';
+import React from 'react';
 
 const notoSansKr = Noto_Sans_KR({
     subsets: ['latin'],
@@ -31,7 +32,6 @@ export default function RootLayout({
                 <Header />
                 <Providers>
                     {children}
-
                     <RecentViewed />
                 </Providers>
 

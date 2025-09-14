@@ -15,7 +15,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     const data = await getMedicineList({
         serviceKey: process.env.SERVICE_API_KEY ?? '',
         itemName: itemName,
-        numOfRows: 12,
+        numOfRows: 20,
         pageNo: pageNo,
         type: 'json',
     });
