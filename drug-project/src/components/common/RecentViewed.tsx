@@ -2,14 +2,9 @@
 
 import { useSearchStore } from '@/store/zustand/searchKeyword';
 import Link from 'next/link';
-import { useEffect } from 'react';
 
 export default function RecentViewed() {
     const { recentItems, clearItems } = useSearchStore();
-
-    useEffect(() => {
-        console.log('## 최근 아이템 :: ', recentItems);
-    }, [recentItems]); // ✅ 항상 호출됨
 
     if (!recentItems || recentItems.length === 0) {
         return null; // ✅ 렌더링만 조건부로
