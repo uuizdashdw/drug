@@ -7,11 +7,11 @@ import Pagination from '@/components/common/Pagination';
 import SearchHistroy from '@/components/search/SearchHistory';
 
 // Types
-import { MedicineListParams } from '@/types/api';
 import { HomeProps } from '@/types/home';
 
 export default async function Home({ searchParams }: HomeProps) {
-    const pageNo = Number(searchParams?.page ?? '1');
+    const params = await searchParams;
+    const pageNo = Number(params?.page ?? '1');
 
     const data = await getMedicineList({
         serviceKey: process.env.SERVICE_API_KEY ?? '',
