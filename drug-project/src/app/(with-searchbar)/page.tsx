@@ -37,6 +37,9 @@ export default async function Home({ searchParams }: HomeProps) {
                     />
                 </>
             )}
+
+            {!Array.isArray(data.body?.items) ||
+                (data.body?.items?.length === 0 && <NoContent keyword={''} />)}
         </div>
     );
 }
