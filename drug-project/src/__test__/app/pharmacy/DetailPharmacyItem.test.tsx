@@ -7,12 +7,16 @@ import '@testing-library/jest-dom';
 import DetailPharmacyItem from '@/app/pharmacy/[id]/page';
 
 // 하위 컴포넌트 mock
-jest.mock('@/components/drug/detail/ImageAndItem', () => (props: any) => (
-    <div data-testid="image-and-item">{JSON.stringify(props)}</div>
-));
-jest.mock('@/components/pharmacy/detail/PharmBasicInfo', () => (props: any) => (
-    <div data-testid="pharm-basic-info">{JSON.stringify(props)}</div>
-));
+jest.mock('@/components/drug/detail/ImageAndItem', () => {
+    const Mock = (props: any) => <div data-testid="image-and-item">{JSON.stringify(props)}</div>;
+    Mock.displayName = 'MockImageAndItem';
+    return Mock;
+});
+jest.mock('@/components/pharmacy/detail/PharmBasicInfo', () => {
+    const Mock = (props: any) => <div data-testid="pharm-basic-info">{JSON.stringify(props)}</div>;
+    Mock.displayName = 'MockPharmBasicInfo';
+    return Mock;
+});
 
 describe('DetailPharmacyItem Page', () => {
     it('params.id를 디코딩하여 ImageAndItem과 PharmBasicInfo에 전달한다', async () => {

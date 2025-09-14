@@ -7,9 +7,11 @@ import '@testing-library/jest-dom';
 import SearchLayout from '@/app/(with-searchbar)/layout';
 
 // SearchBar 컴포넌트 mock
-jest.mock('@/components/search/SearchBar', () => (props: any) => (
-    <div data-testid="search-bar">SearchBar type={props.type}</div>
-));
+jest.mock('@/components/search/SearchBar', () => {
+    const Mock = (props: any) => <div data-testid="search-bar">SearchBar type={props.type}</div>;
+    Mock.displayName = 'MockSearchBar';
+    return Mock;
+});
 
 describe('SearchLayout', () => {
     it('SearchBar와 children을 렌더링한다', async () => {

@@ -15,7 +15,6 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
     const totalPages = useMemo(() => Math.ceil(totalCount / pageSize), [totalCount, pageSize]);
 
     const pathName = usePathname();
-    if (totalPages <= 1) return null;
 
     const pageRange = 12;
     const startPage = useMemo(
@@ -26,6 +25,8 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
         () => Math.min(startPage + pageRange - 1, totalPages),
         [startPage, pageRange, totalPages],
     );
+
+    if (totalPages <= 1) return null;
 
     return (
         <nav className="mt-4 flex justify-center gap-4" data-testid="pagination">
