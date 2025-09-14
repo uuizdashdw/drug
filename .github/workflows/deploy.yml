@@ -1,42 +1,38 @@
 name: CI/CD to Vercel
 
 on:
-    push:
-        branches:
-            - main
-    pull_request: # PR 열릴 때도 테스트 실행
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./drug-project   # 👈 Next.js 실제 루트
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 18
-                  cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-            - name: Install dependencies
-              run: npm ci
+      - name: Install dependencies
+        run: npm install
 
-            - name: Run Jest tests with coverage
-              run: npm run test:ci
+      - name: Run tests
+        run: npm run test:ci
 
-            - name: Upload coverage report
-              uses: actions/upload-artifact@v3
-              with:
-                  name: coverage-report
-                  path: coverage
+      - name: Build Next.js app
+        run: npm run build
 
-            - name: Build Next.js app
-              run: npm run build
-
-            - name: Deploy to Vercel
-              run: npx vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }}
-              env:
-                  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-                  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      - name: Deploy to Vercel
+        run: npx vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
