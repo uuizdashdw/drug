@@ -20,8 +20,14 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
 
     // 한 번에 5페이지 버튼만 보여주고 싶을 때
     const pageRange = 12;
-    const startPage = Math.floor((currentPage - 1) / pageRange) * pageRange + 1;
-    const endPage = Math.min(startPage + pageRange - 1, totalPages);
+
+    const startPage = useMemo(() => {
+        return Math.floor((currentPage - 1) / pageRange) * pageRange + 1;
+    }, [currentPage, pageRange]);
+
+    const endPage = useMemo(() => {
+        return Math.min(startPage + pageRange - 1, totalPages);
+    }, [startPage, pageRange]);
 
     return (
         <nav className="mt-4 flex justify-center gap-4">
