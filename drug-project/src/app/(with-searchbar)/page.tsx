@@ -11,8 +11,7 @@ import { MedicineListParams } from '@/types/api';
 import { HomeProps } from '@/types/home';
 
 export default async function Home({ searchParams }: HomeProps) {
-    const param = await searchParams;
-    const pageNo = Number(param?.page ?? '1');
+    const pageNo = Number(searchParams?.page ?? '1');
 
     const data = await getMedicineList({
         serviceKey: process.env.SERVICE_API_KEY ?? '',
