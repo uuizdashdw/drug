@@ -15,12 +15,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     const data = await getMedicineList({
         serviceKey: process.env.SERVICE_API_KEY ?? '',
         itemName: itemName,
-        numOfRows: 12,
+        numOfRows: 20,
         pageNo: pageNo,
         type: 'json',
     });
-
-    console.log(' ??? ', data.body?.items);
 
     return (
         <div className="container">
@@ -39,11 +37,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <NoContent keyword={itemName} />
             )}
 
-            <Pagination
-                currentPage={pageNo}
-                totalCount={data.body?.totalCount ?? 0}
-                pageSize={12}
-            />
+            {Array.isArray(data.body?.items) && data.body?.items?.length > 0 && (
+                <Pagination
+                    currentPage={pageNo}
+                    totalCount={data.body?.totalCount ?? 0}
+                    pageSize={12}
+                />
+            )}
         </div>
     );
 }

@@ -23,7 +23,7 @@ import {
 } from '@/types/drug';
 
 export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
-    const { id } = await params;
+    const { id } = params;
 
     const data = await getMedicineList({
         serviceKey: process.env?.SERVICE_API_KEY ?? '',

@@ -5,7 +5,7 @@ export interface PharmacyLayoutProps {
 }
 
 export interface PharmacyPageProps {
-    searchParams?: Record<string, string | string[] | undefined>;
+    searchParams?: Promise<{ page?: string }>;
 }
 
 export interface PharmacyItem {
