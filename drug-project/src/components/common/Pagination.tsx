@@ -1,38 +1,40 @@
 'use client';
 
 import Link from 'next/link';
+import { useMemo } from 'react';
+import { usePathname } from 'next/navigation';
+
+// Zustand
+import { useSearchStore } from '@/store/zustand/searchKeyword';
 
 // Types
 import { PaginationProps } from '@/types/common';
-import { useEffect, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
-import { useSearchStore } from '@/store/zustand/searchKeyword';
 
 export default function Pagination({ currentPage, pageSize, totalCount }: PaginationProps) {
     const { queries } = useSearchStore();
-    const totalPages = useMemo(() => {
-        return Math.ceil(totalCount / pageSize);
-    }, [totalCount, pageSize]);
+    const totalPages = useMemo(() => Math.ceil(totalCount / pageSize), [totalCount, pageSize]);
 
     const pathName = usePathname();
-
     if (totalPages <= 1) return null;
 
-    // 한 번에 5페이지 버튼만 보여주고 싶을 때
     const pageRange = 12;
-
-    const startPage = useMemo(() => {
-        return Math.floor((currentPage - 1) / pageRange) * pageRange + 1;
-    }, [currentPage, pageRange]);
-
-    const endPage = useMemo(() => {
-        return Math.min(startPage + pageRange - 1, totalPages);
-    }, [startPage, pageRange]);
+    const startPage = useMemo(
+        () => Math.floor((currentPage - 1) / pageRange) * pageRange + 1,
+        [currentPage, pageRange],
+    );
+    const endPage = useMemo(
+        () => Math.min(startPage + pageRange - 1, totalPages),
+        [startPage, pageRange, totalPages],
+    );
 
     return (
-        <nav className="mt-4 flex justify-center gap-4">
+        <nav className="mt-4 flex justify-center gap-4" data-testid="pagination">
             {currentPage > 1 && (
-                <Link href={`/?page=${currentPage - 1}`} className="rounded border px-3 py-1">
+                <Link
+                    data-testid="prev-button"
+                    href={`/?page=${currentPage - 1}`}
+                    className="rounded border px-3 py-1"
+                >
                     이전
                 </Link>
             )}
@@ -44,6 +46,7 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
                     }`;
                     return (
                         <Link
+                            data-testid={`page-button-${page}`}
                             key={page}
                             href={href}
                             className={`rounded border px-3 py-1 ${
@@ -59,7 +62,11 @@ export default function Pagination({ currentPage, pageSize, totalCount }: Pagina
             )}
 
             {currentPage < totalPages && (
-                <Link href={`/?page=${currentPage + 1}`} className="rounded border px-3 py-1">
+                <Link
+                    data-testid="next-button"
+                    href={`/?page=${currentPage + 1}`}
+                    className="rounded border px-3 py-1"
+                >
                     다음
                 </Link>
             )}
