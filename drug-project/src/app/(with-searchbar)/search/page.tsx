@@ -20,8 +20,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         type: 'json',
     });
 
-    console.log(' ??? ', data.body?.items);
-
     return (
         <div className="container">
             <SearchHistroy />
