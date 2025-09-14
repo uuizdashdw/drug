@@ -5,6 +5,9 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Pagination from '@/components/common/Pagination';
 
+// ✅ 모듈 전체를 import한 후 mock 사용
+import { usePathname } from 'next/navigation';
+
 jest.mock('next/navigation', () => ({
     usePathname: jest.fn(() => '/'),
 }));
@@ -14,6 +17,11 @@ jest.mock('@/store/zustand/searchKeyword', () => ({
 }));
 
 describe('Pagination Component', () => {
+    beforeEach(() => {
+        // 기본값 리셋
+        (usePathname as jest.Mock).mockReturnValue('/');
+    });
+
     it('총 페이지가 1 이하이면 렌더링되지 않는다', () => {
         const { container } = render(<Pagination currentPage={1} pageSize={20} totalCount={10} />);
         expect(container.firstChild).toBeNull();
@@ -41,10 +49,11 @@ describe('Pagination Component', () => {
     });
 
     it('pathName이 /search일 때 query 문자열이 포함된다', () => {
-        (require('next/navigation').usePathname as jest.Mock).mockReturnValue('/search');
-        render(<Pagination currentPage={1} pageSize={10} totalCount={20} />);
+        (usePathname as jest.Mock).mockReturnValue('/search');
 
+        render(<Pagination currentPage={1} pageSize={10} totalCount={20} />);
         const firstPage = screen.getByTestId('page-button-1').closest('a');
+
         expect(firstPage?.getAttribute('href')).toContain('Prduct=');
     });
 });
