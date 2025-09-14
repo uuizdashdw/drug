@@ -5,17 +5,18 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ImageAndItem from '@/components/drug/detail/ImageAndItem';
 
-// ✅ next/image mock
-const MockImage = (props: any) => {
-    const { alt, src, ...rest } = props;
-    return <img alt={alt} src={src} {...rest} />;
-};
-MockImage.displayName = 'MockImage';
+jest.mock('next/image', () => {
+    const MockImage = (props: any) => {
+        const { alt, src, ...rest } = props;
+        return <img alt={alt ?? 'mock-image'} src={src} {...rest} />;
+    };
+    MockImage.displayName = 'MockImage';
 
-jest.mock('next/image', () => ({
-    __esModule: true,
-    default: MockImage,
-}));
+    return {
+        __esModule: true,
+        default: MockImage,
+    };
+});
 
 describe('ImageAndItem Component', () => {
     it('제목에 itemName이 표시된다', () => {
