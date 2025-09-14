@@ -26,7 +26,7 @@ export interface DrugItemProps {
 }
 
 export interface DrugDetailItemProps {
-    params: Promise<{ id: string }>;
+    params: { id: string };
 }
 
 export interface ImageAndItemProps {
