@@ -11,7 +11,7 @@ import { DrugItem } from '@/types/drug';
 const MockDrugItem = ({ drug }: any) => <div data-testid="drug-item">{drug.itemName}</div>;
 MockDrugItem.displayName = 'MockDrugItem';
 
-jest.mock('@/components/drug/DrugItem', () => MockDrugItem);
+jest.mock('@/components/common/DrugItem', () => MockDrugItem);
 
 describe('DrugList Component', () => {
     it('drugs 배열이 주어지면 DrugItem이 개수만큼 렌더링된다', () => {
