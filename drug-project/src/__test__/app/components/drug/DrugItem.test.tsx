@@ -7,18 +7,24 @@ import DrugItem from '@/components/common/DrugItem';
 import { DrugItem as DrugItemType } from '@/types/drug';
 
 // ✅ Next.js 컴포넌트 mock
-jest.mock('next/link', () => ({ children, href, ...rest }: any) => (
+const MockLink = ({ children, href, ...rest }: any) => (
     <a href={href} {...rest}>
         {children}
     </a>
-));
+);
+MockLink.displayName = 'MockLink';
+
+jest.mock('next/link', () => MockLink);
+
+const MockImage = (props: any) => {
+    const { fill, alt = 'mock-image', ...rest } = props;
+    return <img alt={alt} {...rest} />;
+};
+MockImage.displayName = 'MockImage';
 
 jest.mock('next/image', () => ({
     __esModule: true,
-    default: (props: any) => {
-        const { fill, ...rest } = props; // fill 속성 제거
-        return <img {...rest} />;
-    },
+    default: MockImage,
 }));
 
 // ✅ Zustand store mock
@@ -47,8 +53,7 @@ describe('DrugItem Component', () => {
 
     it('약 이름이 화면에 표시된다', async () => {
         render(<DrugItem drug={mockDrug} />);
-        // 이미지 load 이벤트 강제 실행
-        fireEvent.load(screen.getByAltText(/타이레놀/));
+        fireEvent.load(screen.getByAltText(/타이레놀/)); // 이미지 load 이벤트 강제 실행
         expect(await screen.findByText(/타이레놀/)).toBeInTheDocument();
     });
 
@@ -64,8 +69,7 @@ describe('DrugItem Component', () => {
 
     it('클릭 시 addItem이 호출된다', () => {
         render(<DrugItem drug={mockDrug} />);
-        const link = screen.getByRole('link');
-        fireEvent.click(link);
+        fireEvent.click(screen.getByRole('link'));
 
         expect(addItemMock).toHaveBeenCalledWith(
             expect.objectContaining({ itemName: '타이레놀', type: 'drug' }),

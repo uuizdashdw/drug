@@ -8,11 +8,10 @@ import DrugList from '@/components/common/DrugList';
 import { DrugItem } from '@/types/drug';
 
 // DrugItem 모듈 mock (DrugList만 테스트하고 싶을 때)
-jest.mock('@/components/common/DrugItem', () => {
-    return function MockDrugItem({ drug }: any) {
-        return <div data-testid="drug-item">{drug.itemName}</div>;
-    };
-});
+const MockDrugItem = ({ drug }: any) => <div data-testid="drug-item">{drug.itemName}</div>;
+MockDrugItem.displayName = 'MockDrugItem';
+
+jest.mock('@/components/drug/DrugItem', () => MockDrugItem);
 
 describe('DrugList Component', () => {
     it('drugs 배열이 주어지면 DrugItem이 개수만큼 렌더링된다', () => {

@@ -6,20 +6,29 @@ import '@testing-library/jest-dom';
 import PharmacyItem from '@/components/pharmacy/PharmacyItem';
 import { PharmacyItem as PharmacyItemType } from '@/types/pharmacy';
 
-// ✅ Next.js 컴포넌트 mock
-jest.mock('next/link', () => ({ children, href, ...rest }: any) => (
+// ✅ Next.js Link mock
+const MockLink = ({ children, href, ...rest }: any) => (
     <a href={href} {...rest}>
         {children}
     </a>
-));
+);
+MockLink.displayName = 'MockLink';
+
+jest.mock('next/link', () => ({
+    __esModule: true,
+    default: MockLink,
+}));
 
 // ✅ Next.js Image mock (fill 제거)
+const MockImage = (props: any) => {
+    const { alt, src, ...rest } = props;
+    return <img alt={alt} src={src} {...rest} />;
+};
+MockImage.displayName = 'MockImage';
+
 jest.mock('next/image', () => ({
     __esModule: true,
-    default: (props: any) => {
-        const { fill, ...rest } = props;
-        return <img {...rest} />;
-    },
+    default: MockImage,
 }));
 
 // ✅ Zustand store mock
@@ -49,7 +58,6 @@ describe('PharmacyItem Component', () => {
 
     it('약국 이름이 화면에 표시된다', async () => {
         render(<PharmacyItem item={mockPharmacy} />);
-
         expect(await screen.findByText(/우리약국/)).toBeInTheDocument();
     });
 
@@ -60,7 +68,6 @@ describe('PharmacyItem Component', () => {
 
     it('클릭 시 addItem이 호출된다', () => {
         render(<PharmacyItem item={mockPharmacy} />);
-
         const link = screen.getByRole('link', { name: /우리약국/ });
         fireEvent.click(link);
 
