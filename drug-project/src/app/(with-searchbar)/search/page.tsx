@@ -37,11 +37,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <NoContent keyword={itemName} />
             )}
 
-            <Pagination
-                currentPage={pageNo}
-                totalCount={data.body?.totalCount ?? 0}
-                pageSize={12}
-            />
+            {Array.isArray(data.body?.items) && data.body?.items?.length > 0 && (
+                <Pagination
+                    currentPage={pageNo}
+                    totalCount={data.body?.totalCount ?? 0}
+                    pageSize={12}
+                />
+            )}
         </div>
     );
 }

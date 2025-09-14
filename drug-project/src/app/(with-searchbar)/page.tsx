@@ -4,6 +4,7 @@ import { getMedicineList } from '@/api/drugs';
 // Components
 import DrugList from '@/components/common/DrugList';
 import Pagination from '@/components/common/Pagination';
+import NoContent from '@/components/search/NoContent';
 import SearchHistroy from '@/components/search/SearchHistory';
 
 // Types
@@ -25,12 +26,17 @@ export default async function Home({ searchParams }: HomeProps) {
         <div>
             <SearchHistroy />
 
-            <DrugList drugs={data.body?.items} />
-            <Pagination
-                currentPage={pageNo}
-                totalCount={data.body?.totalCount ?? 0}
-                pageSize={12}
-            />
+            {Array.isArray(data.body?.items) && data.body?.items?.length > 0 && (
+                <>
+                    <DrugList drugs={data.body?.items} />
+
+                    <Pagination
+                        currentPage={pageNo}
+                        totalCount={data.body?.totalCount ?? 0}
+                        pageSize={12}
+                    />
+                </>
+            )}
         </div>
     );
 }

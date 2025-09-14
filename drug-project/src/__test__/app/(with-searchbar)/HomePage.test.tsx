@@ -36,7 +36,7 @@ describe('Home Page', () => {
             },
         });
 
-        render(await Home({ searchParams: { page: '2' } }));
+        render(await Home({ searchParams: Promise.resolve({ page: '2' }) }));
 
         // SearchHistory 확인
         expect(screen.getByTestId('search-history')).toBeInTheDocument();
@@ -51,14 +51,15 @@ describe('Home Page', () => {
         expect(screen.getByTestId('pagination')).toHaveTextContent('"pageSize":12');
     });
 
-    it('데이터가 없으면 빈 배열을 DrugList에 전달한다', async () => {
+    it('데이터가 없으면 DrugList와 Pagination이 렌더링되지 않는다', async () => {
         (getMedicineList as jest.Mock).mockResolvedValueOnce({
             body: { items: [], totalCount: 0 },
         });
 
-        render(await Home({ searchParams: {} }));
+        render(await Home({ searchParams: Promise.resolve({}) }));
 
-        expect(screen.getByTestId('drug-list')).toHaveTextContent('[]');
-        expect(screen.getByTestId('pagination')).toHaveTextContent('"totalCount":0');
+        // DrugList와 Pagination이 없어야 한다
+        expect(screen.queryByTestId('drug-list')).toBeNull();
+        expect(screen.queryByTestId('pagination')).toBeNull();
     });
 });

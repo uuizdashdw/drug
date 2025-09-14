@@ -71,7 +71,7 @@ describe('SearchPage', () => {
         // NoContent 렌더링
         expect(screen.getByTestId('no-content')).toHaveTextContent('없는약');
 
-        // Pagination은 항상 존재
-        expect(screen.getByTestId('pagination')).toBeInTheDocument();
+        // Pagination은 항상 존재하지 않음
+        expect(screen.queryByTestId('pagination')).toBeNull();
     });
 });
