@@ -1,0 +1,42 @@
+name: CI/CD to Vercel
+
+on:
+    push:
+        branches:
+            - main
+    pull_request: # PR 열릴 때도 테스트 실행
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run Jest tests with coverage
+              run: npm run test:ci
+
+            - name: Upload coverage report
+              uses: actions/upload-artifact@v3
+              with:
+                  name: coverage-report
+                  path: coverage
+
+            - name: Build Next.js app
+              run: npm run build
+
+            - name: Deploy to Vercel
+              run: npx vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }}
+              env:
+                  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+                  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
