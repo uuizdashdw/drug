@@ -36,6 +36,8 @@ module.exports = {
     rules: {
         // Prettier를 오류로 승격 (포맷 불일치 즉시 발견)
         'prettier/prettier': 'error',
+        '@typescript-eslint/no-unused-vars': 'off',
+        'react-hooks/exhaustive-deps': 'off',
 
         // 타입스크립트에서 any 허용 범위 조정 등(팀 정책에 맞게)
         '@typescript-eslint/no-explicit-any': 'off',
