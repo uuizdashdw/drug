@@ -4,12 +4,10 @@ import { getMedicineList } from '@/api/drugs';
 // Components
 import BasicInfo from '@/components/drug/detail/BasicInfo';
 import Caution from '@/components/drug/detail/Caution';
-import ChangeOrRegistrationHistory from '@/components/drug/detail/ChangeOrRegistrationHistory';
+
 import Classification from '@/components/drug/detail/Classification';
-import ExteriorInfo from '@/components/drug/detail/ExteriorInfo';
 import ImageAndItem from '@/components/drug/detail/ImageAndItem';
 import ManufacturerInfo from '@/components/drug/detail/ManufacturerInfo';
-import MarkAndCodeInfo from '@/components/drug/detail/MarkAndCodeInfo';
 import UseMethod from '@/components/drug/detail/UseMethod';
 
 // Types
