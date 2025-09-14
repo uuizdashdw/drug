@@ -12,15 +12,23 @@ jest.mock('@/api/drugs', () => ({
 }));
 
 // 하위 컴포넌트 mock
-jest.mock('@/components/common/DrugList', () => (props: any) => (
-    <div data-testid="drug-list">{JSON.stringify(props.drugs)}</div>
-));
-jest.mock('@/components/common/Pagination', () => (props: any) => (
-    <div data-testid="pagination">{JSON.stringify(props)}</div>
-));
-jest.mock('@/components/search/SearchHistory', () => () => (
-    <div data-testid="search-history">SearchHistory</div>
-));
+jest.mock('@/components/common/DrugList', () => {
+    const Mock = (props: any) => <div data-testid="drug-list">{JSON.stringify(props.drugs)}</div>;
+    Mock.displayName = 'MockDrugList';
+    return Mock;
+});
+
+jest.mock('@/components/common/Pagination', () => {
+    const Mock = (props: any) => <div data-testid="pagination">{JSON.stringify(props)}</div>;
+    Mock.displayName = 'MockPagination';
+    return Mock;
+});
+
+jest.mock('@/components/search/SearchHistory', () => {
+    const Mock = (props: any) => <div data-testid="search-history">SearchHistory</div>;
+    Mock.displayName = 'MockSearchHistory';
+    return Mock;
+});
 
 import { getMedicineList } from '@/api/drugs';
 
