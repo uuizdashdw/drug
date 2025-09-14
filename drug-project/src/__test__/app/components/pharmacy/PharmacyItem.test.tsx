@@ -6,30 +6,27 @@ import '@testing-library/jest-dom';
 import PharmacyItem from '@/components/pharmacy/PharmacyItem';
 import { PharmacyItem as PharmacyItemType } from '@/types/pharmacy';
 
-// ✅ Next.js Link mock
-const MockLink = ({ children, href, ...rest }: any) => (
-    <a href={href} {...rest}>
-        {children}
-    </a>
-);
-MockLink.displayName = 'MockLink';
-
 jest.mock('next/link', () => ({
     __esModule: true,
-    default: MockLink,
+    default: ({ children, href, ...rest }: any) => (
+        <a href={href} {...rest}>
+            {children}
+        </a>
+    ),
 }));
 
-// ✅ Next.js Image mock (fill 제거)
-const MockImage = (props: any) => {
-    const { alt, src, ...rest } = props;
-    return <img alt={alt} src={src} {...rest} />;
-};
-MockImage.displayName = 'MockImage';
+jest.mock('next/image', () => {
+    const MockImage = (props: any) => {
+        const { alt = 'mock-image', src, ...rest } = props;
+        return <img alt={alt} src={src} {...rest} />;
+    };
+    MockImage.displayName = 'MockImage';
 
-jest.mock('next/image', () => ({
-    __esModule: true,
-    default: MockImage,
-}));
+    return {
+        __esModule: true,
+        default: MockImage,
+    };
+});
 
 // ✅ Zustand store mock
 const addItemMock = jest.fn();
