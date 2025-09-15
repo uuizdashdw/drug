@@ -8,9 +8,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./drug-project
 
     steps:
       - name: Checkout code
@@ -22,13 +19,16 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
+        working-directory: ./drug-project
         run: npm install
 
       - name: Run tests
+        working-directory: ./drug-project
         run: npm run test:ci
 
       # Next.js 자체 빌드 (선택적 - 검증 용도)
       - name: Build Next.js app
+        working-directory: ./drug-project
         run: npm run build
 
       - name: Install Vercel CLI (v47)
@@ -36,8 +36,8 @@ jobs:
 
       # ✅ Vercel 전용 빌드 → .vercel/output 생성
       - name: Build for Vercel
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --cwd=./drug-project --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       # ✅ Prebuilt 결과물을 Production으로 배포
       - name: Deploy to Vercel (Prebuilt)
-        run: vercel deploy --prebuilt --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --cwd=./drug-project --prebuilt --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
