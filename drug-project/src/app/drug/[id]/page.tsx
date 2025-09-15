@@ -15,7 +15,7 @@ import {
     BaiscInfoProps,
     CautionProps,
     DrugDetailItemProps,
-    DrugItem,
+    DrugItemType,
     ImageAndItemProps,
     ManufacturerInfoProps,
 } from '@/types/drug';
@@ -31,7 +31,7 @@ export default async function DrugDetailItem({ params }: DrugDetailItemProps) {
         type: 'json',
     });
 
-    const drug: DrugItem = data?.body?.items?.[0];
+    const drug: DrugItemType = data?.body?.items?.[0];
     if (!drug) {
         return <div>데이터를 찾을 수 없습니다.</div>;
     }
