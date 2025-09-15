@@ -19,24 +19,26 @@ export default function DrugListPage({ pageNo }: { pageNo: number }) {
     }
 
     const drugs = useMemo(() => {
-        return data.body?.items ?? [];
-    }, [data.body?.items]);
+        return data?.body?.items ?? [];
+    }, [data?.body?.items]);
 
     return (
         <>
             {Array.isArray(drugs) && drugs?.length > 0 && (
                 <>
-                    <DrugList drugs={drugs} />
+                    <DrugList drugs={drugs ?? []} />
 
                     <Pagination
                         currentPage={pageNo}
-                        totalCount={data.body?.totalCount ?? 0}
+                        totalCount={data?.body?.totalCount ?? 0}
                         pageSize={12}
                     />
                 </>
             )}
 
-            {!Array.isArray(drugs) || (drugs?.length === 0 && <NoContent keyword={''} />)}
+            {(!Array.isArray(drugs) || drugs?.length === 0) && !isLoading && (
+                <NoContent keyword={''} />
+            )}
 
             {isLoading && <Loading />}
             <ErrorModal />
