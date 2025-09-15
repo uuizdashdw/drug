@@ -1,9 +1,9 @@
-import { DrugItem } from '@/types/drug';
+import { DrugItemType } from '@/types/drug';
 import { PharmacyItem } from '@/types/pharmacy';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type RecentItem = (PharmacyItem & { type: 'pharmacy' }) | (DrugItem & { type: 'drug' });
+type RecentItem = (PharmacyItem & { type: 'pharmacy' }) | (DrugItemType & { type: 'drug' });
 
 type SearchStore = {
     queries: string[];

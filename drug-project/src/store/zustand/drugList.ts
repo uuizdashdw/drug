@@ -1,10 +1,10 @@
-import { DrugItem } from '@/types/drug';
+import { DrugItemType } from '@/types/drug';
 import { create } from 'zustand';
 
 type DrugListStore = {
-    drugs: DrugItem[];
+    drugs: DrugItemType[];
     totalCount: number;
-    setDrugs: (items: DrugItem[], total: number) => void;
+    setDrugs: (items: DrugItemType[], total: number) => void;
     clear: () => void;
 };
 
