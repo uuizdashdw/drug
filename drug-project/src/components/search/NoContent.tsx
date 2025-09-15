@@ -1,3 +1,5 @@
+'use client';
+
 import { NoContentProps } from '@/types/search';
 
 export default function NoContent({ keyword }: NoContentProps) {
