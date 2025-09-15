@@ -36,3 +36,8 @@ export interface PharmacyListParams {
     yPos?: string; // 중심좌표 Y (위도)
     radius?: string; // 반경 (m 단위)
 }
+
+export interface useMedicineListParams {
+    pageNo: number;
+    itemName?: string;
+}
