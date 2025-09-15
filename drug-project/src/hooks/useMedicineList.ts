@@ -1,22 +1,23 @@
 import { getMedicineList } from '@/api/drugs';
 import { useErrorModalStore } from '@/store/zustand/common/errorModalState';
+import { useMedicineListParams } from '@/types/api';
 import { useQuery } from '@tanstack/react-query';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 type MedicineResponse = Awaited<ReturnType<typeof getMedicineList>>;
 
-export const useMedicineList = (pageNo: number) => {
+export const useMedicineList = ({ pageNo, itemName }: useMedicineListParams) => {
     const { open } = useErrorModalStore();
     const query = useQuery({
-        queryKey: ['medicineList', pageNo],
+        queryKey: ['medicineList', pageNo, itemName],
         queryFn: async () => {
             try {
                 return await getMedicineList({
                     serviceKey:
                         process.env.SERVICE_API_KEY ??
                         '582eb8992a09b966d969483025088ab6e10b06829cb8fce85f9edfd58c785a99',
-                    itemName: '',
+                    itemName: itemName ?? '',
                     numOfRows: 20,
                     pageNo,
                     type: 'json',
