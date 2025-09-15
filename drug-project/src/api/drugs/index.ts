@@ -26,7 +26,7 @@ export const getMedicineList = cache(async (params: MedicineListParams) => {
 
     const url = `https://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?${query.toString()}`;
     const res = await fetch(url, { cache: 'force-cache' });
-    console.log('📡 API 요청 URL:', url);
+
     if (!res.ok) {
         throw new Error(`API Error: ${res.status}`);
     }

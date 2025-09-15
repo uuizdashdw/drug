@@ -1,34 +1,28 @@
-import { getMedicineList } from '@/api/drugs';
+import { getPharmacyList } from '@/api/pharmacy';
 import { useErrorModalStore } from '@/store/zustand/common/errorModalState';
-import { useMedicineListParams } from '@/types/api';
+import { usePharmacyListParams } from '@/types/pharmacy';
 import { useQuery } from '@tanstack/react-query';
-import { keepPreviousData } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-type MedicineResponse = Awaited<ReturnType<typeof getMedicineList>>;
-
-export const useMedicineList = ({ pageNo, itemName }: useMedicineListParams) => {
+export const usePharmacyList = ({ pageNo }: usePharmacyListParams) => {
     const { open } = useErrorModalStore();
+
     const query = useQuery({
-        queryKey: ['medicineList', pageNo, itemName],
+        queryKey: ['pharmacyList', pageNo],
         queryFn: async () => {
             try {
-                return await getMedicineList({
+                return await getPharmacyList({
                     serviceKey:
                         process.env.SERVICE_API_KEY ??
                         '582eb8992a09b966d969483025088ab6e10b06829cb8fce85f9edfd58c785a99',
-                    itemName: itemName ?? '',
                     numOfRows: 20,
                     pageNo,
-                    type: 'json',
                 });
-            } catch (e) {
-                console.error('❌ API 실패', e);
+            } catch (err) {
+                console.error('❌ API 실패', err);
                 return { body: { items: [], totalCount: 0 } }; // 최소 안전 리턴
             }
         },
-        // placeholderData: keepPreviousData,
-        // staleTime: 1000 * 60, // 1분 동안은 fresh 상태로 유지
     });
 
     useEffect(() => {

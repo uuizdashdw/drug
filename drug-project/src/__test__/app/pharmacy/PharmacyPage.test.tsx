@@ -1,88 +1,44 @@
-/**
- * @jest-environment jsdom
- */
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
 import PharmacyPage from '@/app/pharmacy/page';
 
-// API 모듈 mock
-jest.mock('@/api/pharmacy', () => ({
-    getPharmacyList: jest.fn(),
-}));
+// PharmacyListPage 모킹
+jest.mock('@/components/pharmacy/PharmacyListPage', () => {
+    const MockPharmacyListPage = ({ pageNo }: { pageNo: number }) => {
+        return <div data-testid="mock-pharmacy-list">PharmacyListPage (pageNo={pageNo})</div>;
+    };
+    MockPharmacyListPage.displayName = 'MockPharmacyListPage';
+    return { __esModule: true, default: MockPharmacyListPage };
+});
 
-// 하위 컴포넌트 mock
-jest.mock('@/components/pharmacy/PharmacyList', () => {
-    const Mock = (props: any) => (
-        <div data-testid="pharmacy-list">{JSON.stringify(props.pharmacies)}</div>
-    );
-    Mock.displayName = 'MockPharmacyList';
-    return Mock;
-});
-jest.mock('@/components/common/Pagination', () => {
-    const Mock = (props: any) => <div data-testid="pagination">{JSON.stringify(props)}</div>;
-    Mock.displayName = 'MockPagination';
-    return Mock;
-});
+// SearchHistory 모킹
 jest.mock('@/components/search/SearchHistory', () => {
-    const Mock = (props: any) => <div data-testid="search-history">SearchHistory</div>;
-    Mock.displayName = 'MockSearchHistory';
-    return Mock;
+    const MockSearchHistory = () => {
+        return <div data-testid="mock-history">SearchHistory</div>;
+    };
+    MockSearchHistory.displayName = 'MockSearchHistory';
+    return { __esModule: true, default: MockSearchHistory };
 });
-jest.mock('@/components/search/NoContent', () => {
-    const Mock = (props: any) => <div data-testid="no-content">{props.keyword}</div>;
-    Mock.displayName = 'MockNoContent';
-    return Mock;
-});
-
-import { getPharmacyList } from '@/api/pharmacy';
 
 describe('PharmacyPage', () => {
-    it('API 데이터를 불러오면 PharmacyList와 Pagination이 렌더링된다', async () => {
-        (getPharmacyList as jest.Mock).mockResolvedValueOnce({
-            response: {
-                body: {
-                    items: {
-                        item: [
-                            {
-                                yadmNm: '우리약국',
-                                addr: '서울시 강남구',
-                                postNo: 12345,
-                                telno: '02-123-4567',
-                            },
-                            {
-                                yadmNm: '튼튼약국',
-                                addr: '서울시 서초구',
-                                postNo: 54321,
-                                telno: '02-765-4321',
-                            },
-                        ],
-                    },
-                    totalCount: 2,
-                },
-            },
-            body: { items: [1, 2] }, // 조건문 통과용
-        });
+    it('page 파라미터가 있으면 해당 값을 내려준다', async () => {
+        const props = {
+            searchParams: Promise.resolve({ page: '5' }),
+        };
 
-        render(await PharmacyPage({ searchParams: Promise.resolve({ page: '1' }) }));
+        render(await PharmacyPage(props));
 
-        expect(screen.getByTestId('search-history')).toBeInTheDocument();
-        expect(screen.getByTestId('pharmacy-list')).toHaveTextContent('우리약국');
-        expect(screen.getByTestId('pharmacy-list')).toHaveTextContent('튼튼약국');
-        expect(screen.getByTestId('pagination')).toHaveTextContent('"currentPage":1');
-        expect(screen.getByTestId('pagination')).toHaveTextContent('"totalCount":2');
+        expect(screen.getByTestId('mock-history')).toBeInTheDocument();
+        expect(screen.getByTestId('mock-pharmacy-list')).toHaveTextContent('pageNo=5');
     });
 
-    it('데이터가 없으면 NoContent가 렌더링된다', async () => {
-        (getPharmacyList as jest.Mock).mockResolvedValueOnce({
-            response: { body: { items: { item: [] }, totalCount: 0 } },
-            body: { items: [] },
-        });
+    it('page 파라미터가 없으면 기본값 1로 렌더링한다', async () => {
+        const props = {
+            searchParams: Promise.resolve({}),
+        };
 
-        render(await PharmacyPage({ searchParams: Promise.resolve({}) }));
+        render(await PharmacyPage(props));
 
-        expect(screen.getByTestId('search-history')).toBeInTheDocument();
-        expect(screen.getByTestId('no-content')).toBeInTheDocument();
-        expect(screen.getByTestId('no-content')).toHaveTextContent('');
+        expect(screen.getByTestId('mock-history')).toBeInTheDocument();
+        expect(screen.getByTestId('mock-pharmacy-list')).toHaveTextContent('pageNo=1');
     });
 });

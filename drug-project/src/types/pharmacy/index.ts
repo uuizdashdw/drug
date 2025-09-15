@@ -47,3 +47,11 @@ export interface PharmBaiscInfoProps {
 export interface BusinessHourProps {
     pharmacy: PharmacyItem;
 }
+
+export interface usePharmacyListParams {
+    pageNo: number;
+}
+
+export interface PharmacyListPageProps {
+    pageNo: number;
+}

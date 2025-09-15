@@ -4,7 +4,7 @@ import { PharmacyListParams } from '@/types/api';
 
 export const getPharmacyList = cache(async (params: PharmacyListParams) => {
     const query = new URLSearchParams({
-        serviceKey: params.serviceKey ?? '',
+        serviceKey: encodeURIComponent(params.serviceKey ?? ''),
         pageNo: String(params?.pageNo ?? 1),
         numOfRows: String(params?.numOfRows ?? 10),
     });
@@ -18,26 +18,20 @@ export const getPharmacyList = cache(async (params: PharmacyListParams) => {
     if (params?.radius) query.set('radius', params.radius);
 
     const url = `https://apis.data.go.kr/B551182/pharmacyInfoService/getParmacyBasisList?${query.toString()}`;
-    const res = await fetch(url, { cache: 'force-cache' });
+    const res = await fetch(url, { cache: 'no-store' });
 
     if (!res.ok) {
         throw new Error(`API Error: ${res.status}`);
     }
 
-    const xml = await res.text();
+    const text = await res.text();
 
-    const parser = new XMLParser({
-        ignoreAttributes: false,
-        attributeNamePrefix: '',
-    });
-
-    const json = parser.parse(xml);
-
-    // 안전하게 배열화
-    const body = json?.response?.body;
-    if (body?.items?.item && !Array.isArray(body.items.item)) {
-        body.items.item = [body.items.item];
+    // Content-Type 확인 후 처리
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('json')) {
+        return JSON.parse(text);
+    } else {
+        const parser = new XMLParser();
+        return parser.parse(text);
     }
-
-    return json;
 });
