@@ -4,7 +4,7 @@ import { MedicineListParams } from '@/types/api';
 // 의약품 설명서 API (DrbEasyDrugInfoService)
 export const getMedicineList = cache(async (params: MedicineListParams) => {
     const query = new URLSearchParams({
-        serviceKey: process.env.SERVICE_API_KEY ?? '',
+        serviceKey: process.env.SERVICE_API_KEY ?? params?.serviceKey,
         pageNo: String(params?.pageNo ?? 1),
         numOfRows: String(params?.numOfRows ?? 12),
         type: params?.type ?? 'json', // 기본 json
@@ -26,7 +26,7 @@ export const getMedicineList = cache(async (params: MedicineListParams) => {
 
     const url = `https://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?${query.toString()}`;
     const res = await fetch(url, { cache: 'force-cache' });
-
+    console.log('📡 API 요청 URL:', url);
     if (!res.ok) {
         throw new Error(`API Error: ${res.status}`);
     }
@@ -35,5 +35,11 @@ export const getMedicineList = cache(async (params: MedicineListParams) => {
         return await res.text();
     }
 
-    return await res.json();
+    const text = await res.text();
+    try {
+        return JSON.parse(text);
+    } catch {
+        console.error('❌ API 응답 JSON 아님:', text.slice(0, 200));
+        throw new Error('API 응답이 JSON 형식이 아닙니다.');
+    }
 });
