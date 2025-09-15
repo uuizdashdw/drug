@@ -1,3 +1,5 @@
+'use client';
+
 import { useErrorModalStore } from '@/store/zustand/common/errorModalState';
 
 export default function ErrorModal() {
