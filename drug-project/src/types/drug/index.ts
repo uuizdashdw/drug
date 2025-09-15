@@ -1,4 +1,4 @@
-export interface DrugItem {
+export interface DrugItemType {
     itemSeq: string; // 품목기준코드
     itemName: string; // 품목명
     entpName: string; // 업체명
@@ -18,11 +18,14 @@ export interface DrugItem {
 }
 
 export interface DrugListProps {
-    drugs: DrugItem[];
+    drugs: DrugItemType[];
+    // isLoading: boolean;
+    // isError: boolean;
+    // error: Error | null;
 }
 
 export interface DrugItemProps {
-    drug: DrugItem;
+    drug: DrugItemType;
 }
 
 export interface DrugDetailItemProps {
