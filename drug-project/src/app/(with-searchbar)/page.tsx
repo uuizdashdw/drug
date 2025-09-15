@@ -5,9 +5,9 @@ import SearchHistroy from '@/components/search/SearchHistory';
 // Types
 import { HomeProps } from '@/types/home';
 
-export default function Home({ searchParams }: HomeProps) {
-    const params = searchParams;
-    const pageNo = Number(params?.page ?? 1);
+export default async function Home({ searchParams }: HomeProps) {
+    const params = await searchParams;
+    const pageNo = Number(params?.page ?? '1');
 
     return (
         <>
