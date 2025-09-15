@@ -4,7 +4,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DrugItem from '@/components/common/DrugItem';
-import { DrugItem as DrugItemType } from '@/types/drug';
+import { DrugItemType } from '@/types/drug';
 
 jest.mock('next/link', () => {
     const MockLink = ({ children, href, ...rest }: any) => (
