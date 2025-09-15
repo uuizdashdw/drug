@@ -11,7 +11,7 @@ import ErrorModal from '../common/ErrorModal';
 import NoContent from '../search/NoContent';
 
 export default function DrugListPage({ pageNo }: { pageNo: number }) {
-    const { data, isLoading, isError, error } = useMedicineList(pageNo);
+    const { data, isLoading, isError, error } = useMedicineList({ pageNo });
     const { open } = useErrorModalStore();
 
     if (isError && error) {
