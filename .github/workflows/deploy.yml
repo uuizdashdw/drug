@@ -27,11 +27,17 @@ jobs:
       - name: Run tests
         run: npm run test:ci
 
+      # Next.js 자체 빌드 (선택적 - 검증 용도)
       - name: Build Next.js app
         run: npm run build
 
       - name: Install Vercel CLI (v47)
         run: npm install -g vercel@47
 
-      - name: Deploy to Vercel
+      # ✅ Vercel 전용 빌드 → .vercel/output 생성
+      - name: Build for Vercel
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      # ✅ Prebuilt 결과물을 Production으로 배포
+      - name: Deploy to Vercel (Prebuilt)
         run: vercel deploy --prebuilt --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
