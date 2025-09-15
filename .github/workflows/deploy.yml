@@ -26,7 +26,6 @@ jobs:
         working-directory: ./drug-project
         run: npm run test:ci
 
-      # Next.js 자체 빌드 (선택적 - 검증 용도)
       - name: Build Next.js app
         working-directory: ./drug-project
         run: npm run build
@@ -34,10 +33,17 @@ jobs:
       - name: Install Vercel CLI (v47)
         run: npm install -g vercel@47
 
-      # ✅ Vercel 전용 빌드 → .vercel/output 생성
-      - name: Build for Vercel
-        run: vercel build --cwd=./drug-project --prod --token=${{ secrets.VERCEL_TOKEN }}
+      # ✅ 반드시 프로젝트 세팅 pull
+      - name: Pull Vercel Project Settings
+        working-directory: ./drug-project
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      # ✅ Prebuilt 결과물을 Production으로 배포
+      # ✅ Vercel 빌드
+      - name: Build for Vercel
+        working-directory: ./drug-project
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      # ✅ Prebuilt 결과 배포
       - name: Deploy to Vercel (Prebuilt)
-        run: vercel deploy --cwd=./drug-project --prebuilt --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./drug-project
+        run: vercel deploy --prebuilt --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
