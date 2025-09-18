@@ -5,22 +5,24 @@ import { useMedicineList } from '@/hooks/useMedicineList';
 import DrugList from '../common/DrugList';
 import Pagination from '../common/Pagination';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Loading from '../common/Loading';
 import ErrorModal from '../common/ErrorModal';
 import NoContent from '../search/NoContent';
+import ListSkeleton from '../common/ListSkeleton';
 
 export default function DrugListPage({ pageNo }: { pageNo: number }) {
     const { data, isLoading, isError, error } = useMedicineList({ pageNo });
     const { open } = useErrorModalStore();
 
-    if (isError && error) {
-        open(error.message);
-    }
-
     const drugs = useMemo(() => {
         return data?.body?.items ?? [];
     }, [data?.body?.items]);
+
+    useEffect(() => {
+        if (!isError || !error) return;
+        open(error.message);
+    }, [isError, error]);
 
     return (
         <>
@@ -36,9 +38,9 @@ export default function DrugListPage({ pageNo }: { pageNo: number }) {
                 </>
             )}
 
-            {(!Array.isArray(drugs) || drugs?.length === 0) && !isLoading && (
-                <NoContent keyword={''} />
-            )}
+            {(!Array.isArray(drugs) || isLoading || drugs?.length === 0) && <ListSkeleton />}
+
+            {!Array.isArray(drugs) && !isLoading && <NoContent keyword={''} />}
 
             {isLoading && <Loading />}
             <ErrorModal />

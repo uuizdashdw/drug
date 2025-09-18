@@ -1,16 +1,18 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
 import { useSearchStore } from '@/store/zustand/searchKeyword';
 import { SearchBarProps } from '@/types/common';
 
 export default function SearchBar({ type }: SearchBarProps) {
-    const { queries, addQuery } = useSearchStore();
+    const { addQuery } = useSearchStore();
     const [searchValue, setSearchValue] = useState('');
 
     const router = useRouter();
     const pathName = usePathname();
+    const searchParams = useSearchParams();
 
     const typeName = useMemo(() => {
         return type === 'pharmacy' ? '약국' : '의약품';
@@ -45,6 +47,11 @@ export default function SearchBar({ type }: SearchBarProps) {
             router.prefetch(`/search/pharmacy?q=${encodeURIComponent(q)}&pageNo=1`);
         }
     }, [searchValue, pathName]);
+
+    useEffect(() => {
+        const q = searchParams.get('q') ?? '';
+        setSearchValue(q);
+    }, [searchParams]);
 
     return (
         <div className="mx-auto mb-4 flex w-8/12 items-center justify-center gap-10">
