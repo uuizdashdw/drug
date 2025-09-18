@@ -1,17 +1,24 @@
 'use client';
 
+import { useEffect, useMemo } from 'react';
+
+// Hooks
 import { usePharmacyList } from '@/hooks/usePharmacyList';
+
 // Types
 import { SearchPharmacyListProps } from '@/types/pharmacy';
-import { useEffect, useMemo } from 'react';
+
+// Components
 import SearchResultGuide from './SearchResultGuide';
 import PharmacyList from '../pharmacy/PharmacyList';
 import NoContent from './NoContent';
 import Pagination from '../common/Pagination';
 import ListSkeleton from '../common/ListSkeleton';
-import { useErrorModalStore } from '@/store/zustand/common/errorModalState';
 import LoadingModal from '../common/Loading';
 import ErrorModal from '../common/ErrorModal';
+
+// Zustand
+import { useErrorModalStore } from '@/store/zustand/common/errorModalState';
 
 export default function SearchPharmacyList({ itemName, pageNo }: SearchPharmacyListProps) {
     const { data, isLoading, isError, error } = usePharmacyList({ pageNo, itemName });
