@@ -6,7 +6,7 @@ export interface PaginationProps {
 
 export interface SearchResultGuideProps {
     itemName: string;
-    length: number;
+    totalCount: number;
 }
 
 export interface SearchBarProps {

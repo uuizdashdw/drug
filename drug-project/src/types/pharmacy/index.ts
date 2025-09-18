@@ -49,9 +49,15 @@ export interface BusinessHourProps {
 }
 
 export interface usePharmacyListParams {
+    itemName: string;
     pageNo: number;
 }
 
 export interface PharmacyListPageProps {
+    pageNo: number;
+}
+
+export interface SearchPharmacyListProps {
+    itemName: string;
     pageNo: number;
 }
