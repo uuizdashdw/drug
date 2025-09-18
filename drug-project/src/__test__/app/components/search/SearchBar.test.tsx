@@ -8,6 +8,8 @@ import SearchBar from '@/components/search/SearchBar';
 const push = jest.fn();
 const prefetch = jest.fn();
 
+import { useSearchParams, usePathname } from 'next/navigation';
+
 jest.mock('next/navigation', () => ({
     useRouter: () => ({ push, prefetch }),
     usePathname: jest.fn(),
@@ -29,7 +31,6 @@ describe('SearchBar', () => {
     });
 
     it('placeholder에 type에 맞는 문구가 보인다 (pharmacy)', () => {
-        const { useSearchParams, usePathname } = require('next/navigation');
         (useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams());
         (usePathname as jest.Mock).mockReturnValue('/');
 
@@ -39,7 +40,6 @@ describe('SearchBar', () => {
     });
 
     it('Enter 입력 시 handleOnSearch가 실행되어 router.push가 호출된다', () => {
-        const { useSearchParams, usePathname } = require('next/navigation');
         (useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams());
         (usePathname as jest.Mock).mockReturnValue('/');
 
@@ -55,7 +55,6 @@ describe('SearchBar', () => {
     });
 
     it('검색 버튼 클릭 시 handleOnSearch가 실행된다', () => {
-        const { useSearchParams, usePathname } = require('next/navigation');
         (useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams());
         (usePathname as jest.Mock).mockReturnValue('/search/pharmacy');
 
@@ -74,7 +73,6 @@ describe('SearchBar', () => {
     });
 
     it('searchParams에 q가 있으면 searchValue 초기값이 설정된다', () => {
-        const { useSearchParams, usePathname } = require('next/navigation');
         (usePathname as jest.Mock).mockReturnValue('/');
         (useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams('q=타이레놀'));
 

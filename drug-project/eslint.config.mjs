@@ -16,8 +16,16 @@ const eslintConfig = [
             '@typescript-eslint/no-explicit-any': 'off', // 👈 여기서 끄기
             '@typescript-eslint/no-unused-vars': 'off',
             'react-hooks/exhaustive-deps': 'off',
+            '@next/next/no-img-element': 'off',
         },
-        ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
+        ignores: [
+            'node_modules/**',
+            '.next/**',
+            'out/**',
+            'build/**',
+            'next-env.d.ts',
+            'src/__test__/**',
+        ],
     },
 ];
 
