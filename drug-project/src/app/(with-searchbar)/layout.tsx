@@ -1,5 +1,5 @@
 import SearchBar from '@/components/search/SearchBar';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, Suspense } from 'react';
 
 interface SearchLayoutProps {
     children: ReactNode;
@@ -8,7 +8,9 @@ interface SearchLayoutProps {
 export default async function SearchLayout({ children }: SearchLayoutProps) {
     return (
         <main>
-            <SearchBar type="drug" />
+            <Suspense fallback={null}>
+                <SearchBar type="drug" />
+            </Suspense>
             <>{children}</>
         </main>
     );

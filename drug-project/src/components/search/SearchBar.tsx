@@ -41,7 +41,7 @@ export default function SearchBar({ type }: SearchBarProps) {
         if (!searchValue?.trim()) return;
         const q = searchValue?.trim();
 
-        if (pathName === 'search' || pathName === '/') {
+        if (pathName === '/search' || pathName === '/') {
             router.prefetch(`/search?q=${encodeURIComponent(q)}`);
         } else {
             router.prefetch(`/search/pharmacy?q=${encodeURIComponent(q)}&pageNo=1`);
