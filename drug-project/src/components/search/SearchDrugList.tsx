@@ -9,6 +9,7 @@ import NoContent from './NoContent';
 import Pagination from '../common/Pagination';
 import LoadingModal from '../common/Loading';
 import ErrorModal from '../common/ErrorModal';
+import ListSkeleton from '../common/ListSkeleton';
 
 // Types
 import { SearchDrugListProps } from '@/types/search';
@@ -16,7 +17,6 @@ import { SearchDrugListProps } from '@/types/search';
 // Hooks
 import { useMedicineList } from '@/hooks/useMedicineList';
 import { useErrorModalStore } from '@/store/zustand/common/errorModalState';
-import ListSkeleton from '../common/ListSkeleton';
 
 export default function SearchDrugList({ itemName, pageNo }: SearchDrugListProps) {
     const { data, isLoading, isError, error } = useMedicineList({ pageNo, itemName });
@@ -25,6 +25,10 @@ export default function SearchDrugList({ itemName, pageNo }: SearchDrugListProps
     const drugs = useMemo(() => {
         return data?.body?.items ?? [];
     }, [data?.body?.items]);
+
+    const totalCount = useMemo(() => {
+        return data?.body?.totalCount;
+    }, [data?.body?.totalCount]);
 
     useEffect(() => {
         if (!isError || !error) return;
@@ -35,7 +39,7 @@ export default function SearchDrugList({ itemName, pageNo }: SearchDrugListProps
         <>
             {Array.isArray(drugs) && !isLoading && drugs?.length > 0 && (
                 <>
-                    {itemName && <SearchResultGuide itemName={itemName} length={drugs?.length} />}
+                    {itemName && <SearchResultGuide itemName={itemName} totalCount={totalCount} />}
                     <DrugList drugs={drugs} />
 
                     <Pagination
