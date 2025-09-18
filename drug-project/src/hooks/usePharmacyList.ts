@@ -4,11 +4,11 @@ import { usePharmacyListParams } from '@/types/pharmacy';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-export const usePharmacyList = ({ pageNo }: usePharmacyListParams) => {
+export const usePharmacyList = ({ itemName, pageNo }: usePharmacyListParams) => {
     const { open } = useErrorModalStore();
 
     const query = useQuery({
-        queryKey: ['pharmacyList', pageNo],
+        queryKey: ['pharmacyList', pageNo, itemName],
         queryFn: async () => {
             try {
                 return await getPharmacyList({
@@ -16,6 +16,7 @@ export const usePharmacyList = ({ pageNo }: usePharmacyListParams) => {
                         process.env.SERVICE_API_KEY ??
                         '582eb8992a09b966d969483025088ab6e10b06829cb8fce85f9edfd58c785a99',
                     numOfRows: 20,
+                    yadmNm: itemName,
                     pageNo,
                 });
             } catch (err) {
