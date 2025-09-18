@@ -1,4 +1,5 @@
 import { getPharmacyList } from '@/api/pharmacy';
+import ListSkeleton from '@/components/common/ListSkeleton';
 import Pagination from '@/components/common/Pagination';
 import PharmacyList from '@/components/pharmacy/PharmacyList';
 import NoContent from '@/components/search/NoContent';
@@ -35,8 +36,7 @@ export default async function PharmacySearchPage({ searchParams }: SearchPharmac
                     </>
                 )}
 
-            {(!Array.isArray(data?.response?.body?.items?.item) ||
-                data?.response?.body?.items?.item?.length === 0) && <NoContent keyword={keyword} />}
+            {!Array.isArray(data?.response?.body?.items?.item) && <NoContent keyword={keyword} />}
 
             {Array.isArray(data?.response?.body?.items?.item) &&
                 data?.response?.body?.items?.item?.length > 0 && (
