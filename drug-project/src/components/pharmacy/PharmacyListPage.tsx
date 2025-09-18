@@ -12,7 +12,7 @@ import ErrorModal from '../common/ErrorModal';
 import ListSkeleton from '../common/ListSkeleton';
 
 export default function PharmacyListPage({ pageNo }: PharmacyListPageProps) {
-    const { data, isLoading, isError, error } = usePharmacyList({ pageNo });
+    const { data, isLoading, isError, error } = usePharmacyList({ pageNo, itemName: '' });
     const { open } = useErrorModalStore();
 
     const pharmacies = useMemo(() => {
@@ -40,7 +40,7 @@ export default function PharmacyListPage({ pageNo }: PharmacyListPageProps) {
                 <ListSkeleton />
             )}
 
-            {!Array.isArray(pharmacies) && !isLoading && <NoContent keyword={''} />}
+            {Array.isArray(pharmacies) && !isLoading && <NoContent keyword={''} />}
 
             {isLoading && <LoadingModal />}
             <ErrorModal />

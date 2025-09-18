@@ -40,7 +40,7 @@ export default function DrugListPage({ pageNo }: { pageNo: number }) {
 
             {(!Array.isArray(drugs) || isLoading || drugs?.length === 0) && <ListSkeleton />}
 
-            {!Array.isArray(drugs) && !isLoading && <NoContent keyword={''} />}
+            {Array.isArray(drugs) && !isLoading && <NoContent keyword={''} />}
 
             {isLoading && <Loading />}
             <ErrorModal />

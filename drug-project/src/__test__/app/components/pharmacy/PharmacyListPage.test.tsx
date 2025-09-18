@@ -30,11 +30,11 @@ jest.mock('@/components/common/Pagination', () => {
 });
 
 jest.mock('@/components/search/NoContent', () => {
-    const MockNoContent = ({ keyword }: { keyword: string }) => (
-        <div data-testid="mock-nocontent">{`NoContent keyword=${keyword}`}</div>
+    const Mock = ({ keyword }: { keyword: string }) => (
+        <div data-testid="no-content">{`no result: ${keyword}`}</div>
     );
-    MockNoContent.displayName = 'MockNoContent';
-    return { __esModule: true, default: MockNoContent };
+    Mock.displayName = 'NoContent';
+    return { __esModule: true, default: Mock };
 });
 
 jest.mock('@/components/common/Loading', () => {
@@ -97,7 +97,7 @@ describe('PharmacyListPage', () => {
 
         render(<PharmacyListPage pageNo={1} />);
 
-        expect(screen.getByTestId('mock-nocontent')).toBeInTheDocument();
+        expect(screen.getByTestId('no-content')).toBeInTheDocument();
     });
 
     it('로딩 중이면 LoadingModal을 보여준다', () => {
