@@ -27,6 +27,17 @@ const eslintConfig = [
             'src/__test__/**',
         ],
     },
+    {
+        files: [
+            'src/__test__/**/*.{ts,tsx}', // ✅ 테스트 코드 전체
+            '**/*.test.{ts,tsx}', // ✅ 혹시 다른 경로의 테스트도 커버
+        ],
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'off', // ✅ 테스트에서는 any 허용
+            '@next/next/no-img-element': 'off', // ✅ <img> 허용
+            '@typescript-eslint/no-unused-vars': 'off', // ✅ 안 쓰는 변수 허용
+        },
+    },
 ];
 
 export default eslintConfig;
