@@ -40,7 +40,9 @@ export default function PharmacyListPage({ pageNo }: PharmacyListPageProps) {
                 <ListSkeleton />
             )}
 
-            {Array.isArray(pharmacies) && !isLoading && <NoContent keyword={''} />}
+            {Array.isArray(pharmacies) && !isLoading && pharmacies?.length === 0 && (
+                <NoContent keyword={''} />
+            )}
 
             {isLoading && <LoadingModal />}
             <ErrorModal />
