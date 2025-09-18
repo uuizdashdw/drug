@@ -57,6 +57,7 @@ module.exports = {
             rules: {
                 // 테스트에서만 허용할 규칙들 추가 가능
                 '@next/next/no-img-element': 'off',
+                '@typescript-eslint/no-explicit-any': 'off', // ✅ 테스트 코드에서 any 허용
             },
         },
         // 구성 파일(CJS require 허용) — no-require-imports 우회
